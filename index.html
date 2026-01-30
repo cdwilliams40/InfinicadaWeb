@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Pocus by Infinicada</title>
+    <style>
+        :root {
+            --primary: #4f46e5; /* Indigo */
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --white: #ffffff;
+            --accent: #818cf8;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+        }
+
+        /* Layout Utilities */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #4338ca;
+        }
+
+        /* Hero Section */
+        header {
+            text-align: center;
+            padding: 100px 0 60px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ffffff 100%);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 60px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* About Developer */
+        .developer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        /* Privacy Policy Section */
+        .privacy-section {
+            background-color: var(--dark);
+            color: #9ca3af;
+            padding: 60px 0;
+            font-size: 0.9rem;
+        }
+
+        .privacy-section h2 {
+            color: var(--white);
+        }
+
+        .privacy-box {
+            border: 1px solid #374151;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            background: #111827;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #111827;
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Focus Pocus</h1>
+            <p class="subtitle">Magic for your attention span.</p>
+            <p>The free, hardware-agnostic app blocker.</p>
+            <br>
+            <a href="#" class="btn">Coming Soon to Android</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="features">
+            <div class="feature-card">
+                <span class="feature-icon">🔓</span>
+                <h3>Bring Your Own Tag</h3>
+                <p>Don't pay $50 for a "special" brick. Focus Pocus works with any generic NFC tag, sticker, or card you already own.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🚫</span>
+                <h3>Hard Blocking</h3>
+                <p>Tap your phone to your NFC tag to instantly lock distracting apps. Tap again to unlock. It's that simple.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💸</span>
+                <h3>Completely Free</h3>
+                <p>Productivity shouldn't be a luxury subscription. Focus Pocus is free to use.</p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="container developer">
+        <h3>Developed by Infinicada</h3>
+        <p>Building tools to help you reclaim your time.</p>
+    </div>
+
+    <section class="privacy-section">
+        <div class="container">
+            <h2>Privacy Policy</h2>
+            <p><strong>Effective Date:</strong> January 30, 2026</p>
+            
+            <div class="privacy-box">
+                <p><strong>I do not want your data.</strong></p>
+                <p>Focus Pocus is designed with a "Privacy Absolute" philosophy. The app operates entirely locally on your device.</p>
+                <ul>
+                    <li><strong>No Data Collection:</strong> I do not collect, transmit, or store any usage data, personal information, or app activity.</li>
+                    <li><strong>No Tracking:</strong> There are no third-party analytics or tracking pixels installed in the app.</li>
+                    <li><strong>No Accounts:</strong> You do not need to create an account to use Focus Pocus.</li>
+                </ul>
+                <p>Because I do not collect any data, I have no data to share with third parties.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Infinicada. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
