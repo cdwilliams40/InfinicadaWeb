@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Focus Pocus</title>
+    <title>Privacy Policy – Focus Pocus by Infinicada</title>
+    <meta name="description" content="Focus Pocus Privacy Policy. Zero data collection, no tracking, no accounts. All Android permissions are used locally and data never leaves your device.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Privacy Policy – Focus Pocus by Infinicada">
+    <meta property="og:description" content="Zero data collection, no tracking, no accounts. All Android permissions are used locally and data never leaves your device.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+
     <style>
         :root {
             --primary: #4f46e5;
@@ -21,24 +31,32 @@
             background-color: var(--light);
         }
 
-        .container {
+        /* Accessibility: visible focus styles */
+        :focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        main {
             max-width: 800px;
             margin: 40px auto;
             padding: 40px;
             background: var(--white);
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         h1 {
             color: var(--primary);
             border-bottom: 2px solid #e5e7eb;
             padding-bottom: 15px;
+            margin-top: 0;
         }
 
         h2 {
             margin-top: 30px;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: #111827;
         }
 
@@ -58,6 +76,10 @@
             font-weight: 600;
         }
 
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
         .contact-box {
             background: #f9fafb;
             padding: 15px;
@@ -65,13 +87,21 @@
             border: 1px solid #e5e7eb;
             margin-top: 20px;
         }
+
+        .contact-box p {
+            margin: 4px 0;
+        }
+
+        .contact-box a {
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <main>
         <a href="index.html" class="back-link">← Back to Focus Pocus</a>
-        
+
         <h1>Privacy Policy</h1>
         <p><strong>Last Updated:</strong> February 17, 2026</p>
 
@@ -89,7 +119,7 @@
 
         <h2>2. Android Permissions</h2>
         <p>To function as a productivity tool, Focus Pocus requires specific permissions from your Android device. These permissions are used strictly for functionality and <strong>never</strong> for data collection.</p>
-        
+
         <ul>
             <li><strong>NFC (Near Field Communication):</strong> Required to detect when you tap your phone against an NFC tag to toggle focus on/off. Tag data is processed locally in real-time and never stored or transmitted.</li>
             <li><strong>Accessibility Service:</strong> Required to monitor which app is in the foreground so Focus Pocus can enforce blocking and time limits. This monitoring happens entirely on-device; no app activity is uploaded.</li>
@@ -110,7 +140,7 @@
         <h2>4. Advertising</h2>
         <p>Focus Pocus is free and does not display third-party advertisements. Therefore, no ad-targeting data is collected.</p>
 
-        <h2>5. Children’s Privacy</h2>
+        <h2>5. Children's Privacy</h2>
         <p>The App does not address anyone under the age of 13. As the App does not collect personal information, I do not knowingly collect personally identifiable information from children.</p>
 
         <h2>6. Changes to This Privacy Policy</h2>
@@ -118,13 +148,12 @@
 
         <h2>7. Contact Me</h2>
         <p>If you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me.</p>
-        
+
         <div class="contact-box">
             <p><strong>Developer:</strong> Infinicada</p>
-            <p><strong>Email:</strong> contact@infinicada.com</p>
+            <p><strong>Email:</strong> <a href="mailto:contact@infinicada.com">contact@infinicada.com</a></p>
         </div>
-
-    </div>
+    </main>
 
 </body>
 </html>

@@ -3,10 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Focus Pocus by Infinicada</title>
+    <title>Focus Pocus – Free NFC App Blocker for Android</title>
+    <meta name="description" content="Focus Pocus is a free, privacy-first Android app blocker. Block distracting apps with an NFC tap, QR code, or schedule. No subscriptions, no ads, no data collection.">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Focus Pocus – Free NFC App Blocker for Android">
+    <meta property="og:description" content="Block distracting apps with an NFC tap, QR code, or schedule. Free, private, and hardware-agnostic.">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Focus Pocus – Free NFC App Blocker for Android">
+    <meta name="twitter:description" content="Block distracting apps with an NFC tap, QR code, or schedule. Free, private, and hardware-agnostic.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+
     <style>
         :root {
-            --primary: #4f46e5; /* Indigo */
+            --primary: #4f46e5;
             --dark: #1f2937;
             --light: #f3f4f6;
             --white: #ffffff;
@@ -22,38 +37,43 @@
             background-color: var(--white);
         }
 
-        /* Layout Utilities */
+        /* Accessibility: visible focus styles for keyboard navigation */
+        :focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* Layout */
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: var(--white);
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #4338ca;
-        }
-
-        /* Hero Section */
+        /* Hero */
         header {
             text-align: center;
-            padding: 100px 0 60px;
+            padding: 80px 0 60px;
             background: linear-gradient(135deg, #e0e7ff 0%, #ffffff 100%);
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #ede9fe;
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 99px;
+            margin-bottom: 20px;
         }
 
         h1 {
             font-size: 3.5rem;
-            margin-bottom: 10px;
+            margin: 0 0 10px;
             color: var(--primary);
             letter-spacing: -1px;
         }
@@ -61,7 +81,34 @@
         .subtitle {
             font-size: 1.5rem;
             color: #6b7280;
-            margin-bottom: 30px;
+            margin: 0 0 8px;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: #9ca3af;
+            margin: 0 0 32px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #4338ca;
+        }
+
+        .btn-disabled {
+            background-color: #d1d5db;
+            color: #6b7280;
+            cursor: default;
         }
 
         /* Features Grid */
@@ -69,30 +116,51 @@
             padding: 60px 0;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
+            gap: 24px;
         }
 
         .feature-card {
             background: var(--light);
-            padding: 30px;
+            padding: 28px;
             border-radius: 12px;
             text-align: center;
         }
 
         .feature-icon {
             font-size: 2rem;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: block;
         }
 
-        /* About Developer */
+        .feature-card h2 {
+            font-size: 1rem;
+            margin: 0 0 8px;
+        }
+
+        .feature-card p {
+            font-size: 0.92rem;
+            margin: 0;
+            color: #4b5563;
+        }
+
+        /* Developer */
         .developer {
             text-align: center;
             padding: 40px 0;
             border-top: 1px solid #e5e7eb;
         }
 
-        /* Privacy Policy Section */
+        .developer h2 {
+            font-size: 1.1rem;
+            margin: 0 0 6px;
+        }
+
+        .developer p {
+            color: #6b7280;
+            margin: 0;
+        }
+
+        /* Privacy Section */
         .privacy-section {
             background-color: var(--dark);
             color: #9ca3af;
@@ -102,6 +170,7 @@
 
         .privacy-section h2 {
             color: var(--white);
+            margin-top: 0;
         }
 
         .privacy-box {
@@ -112,12 +181,35 @@
             background: #111827;
         }
 
+        .privacy-box a {
+            color: var(--accent);
+        }
+
+        .privacy-box a:focus-visible {
+            outline-color: var(--accent);
+        }
+
+        /* Footer */
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 24px 20px;
             background: #111827;
             color: #6b7280;
             font-size: 0.8rem;
+            line-height: 2;
+        }
+
+        footer a {
+            color: #9ca3af;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        footer a:focus-visible {
+            outline-color: var(--accent);
         }
 
         @media (max-width: 600px) {
@@ -129,87 +221,88 @@
 
     <header>
         <div class="container">
+            <div class="badge">Coming to Android</div>
             <h1>Focus Pocus</h1>
             <p class="subtitle">Magic for your attention span.</p>
-            <p>The free, hardware-agnostic app blocker.</p>
-            <br>
-            <a href="#" class="btn">Coming Soon to Android</a>
+            <p class="hero-desc">The free, hardware-agnostic NFC app blocker.</p>
+            <span class="btn btn-disabled" role="note">Coming Soon to Android</span>
         </div>
     </header>
 
-    <div class="container">
-        <div class="features">
-            <div class="feature-card">
-                <span class="feature-icon">🔓</span>
-                <h3>Bring Your Own Tag</h3>
-                <p>Don't pay $50 for a "special" brick. Focus Pocus works with any generic NFC tag, sticker, or card you already own.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">🚫</span>
-                <h3>Hard Blocking</h3>
-                <p>Block apps via NFC tap, QR code scan, or manual toggle. Enable Talisman Lock Mode for maximum commitment — only your physical tag can lift the block.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">📅</span>
-                <h3>Scheduled Rituals</h3>
-                <p>Set recurring schedules that auto-activate blocking at the right times. Supports overnight spans so your morning routine starts distraction-free.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">⚡</span>
-                <h3>Smart Triggers</h3>
-                <p>Auto-activate focus mode when you connect to a specific Wi-Fi network or Bluetooth device — your office router, your desk speaker, your call.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">⏱️</span>
-                <h3>App Time Limits</h3>
-                <p>Set daily usage quotas per app. Limits are enforced even outside focus sessions so mindless scrolling stays in check all day.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">🔔</span>
-                <h3>Notification Blocking</h3>
-                <p>Automatically silence notifications from blocked apps during focus sessions so pings can't pull you back in.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">📊</span>
-                <h3>Insights &amp; Streaks</h3>
-                <p>Track focus sessions, daily streaks, blocking stats, and per-app usage over time — all stored privately on your device.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">💸</span>
-                <h3>Completely Free</h3>
-                <p>No subscriptions, no ads, no data collection. Productivity shouldn't be a luxury.</p>
-            </div>
-        </div>
-    </div>
-
-    
-
-    <div class="container developer">
-        <h3>Developed by Infinicada</h3>
-        <p>Building tools to help you reclaim your time.</p>
-    </div>
-
-    <section class="privacy-section">
+    <main>
         <div class="container">
-            <h2>Privacy Policy</h2>
-            <p><strong>Effective Date:</strong> January 30, 2026</p>
-            
-            <div class="privacy-box">
-                <p><strong>I do not want your data.</strong></p>
-                <p>Focus Pocus is designed with a "Privacy Absolute" philosophy. The app operates entirely locally on your device.</p>
-                <ul>
-                    <li><strong>No Data Collection:</strong> I do not collect, transmit, or store any usage data, personal information, or app activity.</li>
-                    <li><strong>No Tracking:</strong> There are no third-party analytics or tracking pixels installed in the app.</li>
-                    <li><strong>No Accounts:</strong> You do not need to create an account to use Focus Pocus.</li>
-                    <li><strong>Permissions Stay Local:</strong> The app requires several Android permissions (Accessibility, NFC, Notifications, Location, Bluetooth, Camera, Usage Stats) to power its features — all data those permissions touch stays on your device and is never uploaded.</li>
-                </ul>
-                <p>Because I do not collect any data, I have no data to share with third parties. <a href="privacy.html" style="color: #818cf8;">Full privacy policy →</a></p>
+            <div class="features">
+                <div class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">🔓</span>
+                    <h2>Bring Your Own Tag</h2>
+                    <p>Don't pay $50 for a "special" brick. Focus Pocus works with any generic NFC tag, sticker, or card you already own.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">🚫</span>
+                    <h2>Hard Blocking</h2>
+                    <p>Block apps via NFC tap, QR code scan, or manual toggle. Enable Talisman Lock Mode for maximum commitment — only your physical tag can lift the block.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">📅</span>
+                    <h2>Scheduled Rituals</h2>
+                    <p>Set recurring schedules that auto-activate blocking at the right times. Supports overnight spans so your morning routine starts distraction-free.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">⚡</span>
+                    <h2>Smart Triggers</h2>
+                    <p>Auto-activate focus mode when you connect to a specific Wi-Fi network or Bluetooth device — your office router, your desk speaker, your call.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">⏱️</span>
+                    <h2>App Time Limits</h2>
+                    <p>Set daily usage quotas per app. Limits are enforced even outside focus sessions so mindless scrolling stays in check all day.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">🔔</span>
+                    <h2>Notification Blocking</h2>
+                    <p>Automatically silence notifications from blocked apps during focus sessions so pings can't pull you back in.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">📊</span>
+                    <h2>Insights &amp; Streaks</h2>
+                    <p>Track focus sessions, daily streaks, blocking stats, and per-app usage over time — all stored privately on your device.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">💸</span>
+                    <h2>Completely Free</h2>
+                    <p>No subscriptions, no ads, no data collection. Productivity shouldn't be a luxury.</p>
+                </div>
             </div>
         </div>
-    </section>
+
+        <div class="container developer">
+            <h2>Developed by Infinicada</h2>
+            <p>Building tools to help you reclaim your time.</p>
+        </div>
+
+        <section class="privacy-section">
+            <div class="container">
+                <h2>Privacy</h2>
+                <p><strong>Effective Date:</strong> January 30, 2026</p>
+
+                <div class="privacy-box">
+                    <p><strong>I do not want your data.</strong></p>
+                    <p>Focus Pocus is designed with a "Privacy Absolute" philosophy. The app operates entirely locally on your device.</p>
+                    <ul>
+                        <li><strong>No Data Collection:</strong> I do not collect, transmit, or store any usage data, personal information, or app activity.</li>
+                        <li><strong>No Tracking:</strong> There are no third-party analytics or tracking pixels installed in the app.</li>
+                        <li><strong>No Accounts:</strong> You do not need to create an account to use Focus Pocus.</li>
+                        <li><strong>Permissions Stay Local:</strong> The app requires several Android permissions (Accessibility, NFC, Notifications, Location, Bluetooth, Camera, Usage Stats) to power its features — all data those permissions touch stays on your device and is never uploaded.</li>
+                    </ul>
+                    <p>Because I do not collect any data, I have no data to share with third parties. <a href="privacy.html">Full privacy policy →</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 Infinicada. All rights reserved.</p>
+        <p><a href="privacy.html">Privacy Policy</a> &middot; <a href="mailto:contact@infinicada.com">contact@infinicada.com</a></p>
     </footer>
 
 </body>
