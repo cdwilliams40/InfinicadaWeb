@@ -143,6 +143,91 @@
             color: #4b5563;
         }
 
+        /* Beta Section */
+        .beta-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #ede9fe 0%, #e0e7ff 100%);
+        }
+
+        .beta-section h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 0 0 8px;
+        }
+
+        .beta-section .beta-desc {
+            text-align: center;
+            color: #6b7280;
+            margin: 0 0 40px;
+        }
+
+        .beta-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .beta-step {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .beta-step h3 {
+            font-size: 1rem;
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .beta-step p {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .beta-step-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .btn-outline {
+            display: inline-block;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
         /* Developer */
         .developer {
             text-align: center;
@@ -221,11 +306,11 @@
 
     <header>
         <div class="container">
-            <div class="badge">Coming to Android</div>
+            <div class="badge">Now in Closed Beta</div>
             <h1>Focus Pocus</h1>
             <p class="subtitle">Magic for your attention span.</p>
             <p class="hero-desc">The free, hardware-agnostic NFC app blocker.</p>
-            <span class="btn btn-disabled" role="note">Coming Soon to Android</span>
+            <a href="#beta" class="btn">Join the Closed Beta</a>
         </div>
     </header>
 
@@ -274,6 +359,32 @@
                 </div>
             </div>
         </div>
+
+        <section class="beta-section" id="beta">
+            <div class="container">
+                <h2>Join the Closed Beta</h2>
+                <p class="beta-desc">Get early access to Focus Pocus and help shape the app before public launch.</p>
+                <div class="beta-steps">
+                    <div class="beta-step">
+                        <span class="step-number" aria-hidden="true">1</span>
+                        <h3>Request Access</h3>
+                        <p>Send a request to join the Focus Pocus Testers Google Group. You'll receive a confirmation once approved.</p>
+                        <div class="beta-step-actions">
+                            <a href="mailto:focus-pocus-testers+subscribe@googlegroups.com" class="btn">Request to Join</a>
+                        </div>
+                    </div>
+                    <div class="beta-step">
+                        <span class="step-number" aria-hidden="true">2</span>
+                        <h3>Download the App</h3>
+                        <p>Once you're approved and added to the group, use one of the links below to install the beta.</p>
+                        <div class="beta-step-actions">
+                            <a href="https://play.google.com/store/apps/details?id=com.infinicada.focuspocus" class="btn" target="_blank" rel="noopener noreferrer">Download on Android</a>
+                            <a href="https://play.google.com/apps/testing/com.infinicada.focuspocus" class="btn-outline" target="_blank" rel="noopener noreferrer">Open Testing Page</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <div class="container developer">
             <h2>Developed by Infinicada</h2>
