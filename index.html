@@ -22,10 +22,25 @@
     <style>
         :root {
             --primary: #4f46e5;
+            --primary-dark: #4338ca;
             --dark: #1f2937;
             --light: #f3f4f6;
             --white: #ffffff;
             --accent: #818cf8;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -35,6 +50,7 @@
             line-height: 1.6;
             color: var(--dark);
             background-color: var(--white);
+            overflow-x: hidden;
         }
 
         /* Accessibility: visible focus styles for keyboard navigation */
@@ -44,249 +60,519 @@
             border-radius: 4px;
         }
 
-        /* Layout */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* ── Navigation ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 24px;
+            transition: background 0.3s, box-shadow 0.3s;
         }
 
-        /* Hero */
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--dark);
+        }
+
+        .hamburger svg {
+            display: block;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 16px 24px;
+            z-index: 999;
+        }
+
+        .mobile-menu.open {
+            display: block;
+            animation: slideDown 0.25s ease-out;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 12px 0;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 1rem;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--primary);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Layout ── */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── Hero ── */
         header {
+            position: relative;
             text-align: center;
-            padding: 80px 0 60px;
-            background: linear-gradient(135deg, #e0e7ff 0%, #ffffff 100%);
+            padding: 140px 0 80px;
+            background: linear-gradient(150deg, #eef2ff 0%, #e0e7ff 40%, #ffffff 100%);
+            overflow: hidden;
+        }
+
+        /* Decorative floating orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #c7d2fe;
+            top: -100px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #a5b4fc;
+            bottom: -80px;
+            left: -60px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        .orb-3 {
+            width: 200px;
+            height: 200px;
+            background: #e0e7ff;
+            top: 50%;
+            left: 60%;
+            animation: float 12s ease-in-out infinite 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(20px, -20px) scale(1.05); }
+            66% { transform: translate(-10px, 15px) scale(0.95); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
 
         .badge {
             display: inline-block;
-            background-color: #ede9fe;
+            background-color: rgba(79, 70, 229, 0.1);
             color: var(--primary);
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 4px 14px;
+            padding: 6px 16px;
             border-radius: 99px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(79, 70, 229, 0.15);
+            animation: fadeInUp 0.6s ease-out both;
         }
 
         h1 {
-            font-size: 3.5rem;
-            margin: 0 0 10px;
+            font-size: 3.8rem;
+            margin: 0 0 12px;
             color: var(--primary);
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
         }
 
         .subtitle {
             font-size: 1.5rem;
-            color: #6b7280;
+            color: var(--gray-500);
             margin: 0 0 8px;
+            font-weight: 400;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
         }
 
         .hero-desc {
-            font-size: 1rem;
-            color: #9ca3af;
-            margin: 0 0 32px;
+            font-size: 1.05rem;
+            color: var(--gray-400);
+            margin: 0 0 36px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .btn {
             display: inline-block;
             background-color: var(--primary);
             color: var(--white);
-            padding: 12px 28px;
-            border-radius: 8px;
+            padding: 14px 32px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
-            transition: background 0.2s;
+            font-size: 1rem;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
         }
 
         .btn:hover {
-            background-color: #4338ca;
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .hero-btn {
+            animation: fadeInUp 0.6s ease-out 0.4s both;
         }
 
         .btn-disabled {
             background-color: #d1d5db;
-            color: #6b7280;
+            color: var(--gray-500);
             cursor: default;
+            box-shadow: none;
         }
 
-        /* Features Grid */
+        /* ── Features Grid ── */
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin: 0 0 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header p {
+            color: var(--gray-500);
+            margin: 0;
+            font-size: 1.05rem;
+        }
+
         .features {
-            padding: 60px 0;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
         }
 
         .feature-card {
             background: var(--light);
-            padding: 28px;
-            border-radius: 12px;
+            padding: 32px 28px;
+            border-radius: 16px;
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            border-color: #e5e7eb;
+            background: var(--white);
         }
 
         .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 12px;
+            font-size: 2.2rem;
+            margin-bottom: 16px;
             display: block;
         }
 
-        .feature-card h2 {
-            font-size: 1rem;
+        .feature-card h3 {
+            font-size: 1.05rem;
             margin: 0 0 8px;
+            color: var(--dark);
         }
 
         .feature-card p {
             font-size: 0.92rem;
             margin: 0;
-            color: #4b5563;
+            color: var(--gray-600);
+            line-height: 1.5;
         }
 
-        /* Beta Section */
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered children */
+        .stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+        .stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+        .stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
+        .stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
+        .stagger > .reveal:nth-child(5) { transition-delay: 0.32s; }
+        .stagger > .reveal:nth-child(6) { transition-delay: 0.4s; }
+        .stagger > .reveal:nth-child(7) { transition-delay: 0.48s; }
+        .stagger > .reveal:nth-child(8) { transition-delay: 0.56s; }
+
+        /* ── Beta Section ── */
         .beta-section {
-            padding: 60px 0;
-            background: linear-gradient(135deg, #ede9fe 0%, #e0e7ff 100%);
+            padding: 80px 0;
+            background: linear-gradient(150deg, #ede9fe 0%, #e0e7ff 100%);
         }
 
         .beta-section h2 {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--primary);
             margin: 0 0 8px;
+            letter-spacing: -0.5px;
         }
 
         .beta-section .beta-desc {
             text-align: center;
-            color: #6b7280;
-            margin: 0 0 40px;
+            color: var(--gray-500);
+            margin: 0 0 48px;
+            font-size: 1.05rem;
         }
 
         .beta-steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
         }
 
         .beta-step {
             background: var(--white);
-            border-radius: 12px;
-            padding: 28px;
+            border-radius: 16px;
+            padding: 32px;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(79, 70, 229, 0.08);
+        }
+
+        .beta-step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(79, 70, 229, 0.1);
         }
 
         .step-number {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             background: var(--primary);
             color: var(--white);
-            border-radius: 50%;
+            border-radius: 12px;
             font-weight: 700;
             font-size: 1rem;
             flex-shrink: 0;
         }
 
         .beta-step h3 {
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin: 0;
             color: var(--dark);
         }
 
         .beta-step p {
-            font-size: 0.9rem;
-            color: #6b7280;
+            font-size: 0.92rem;
+            color: var(--gray-500);
             margin: 0;
+            line-height: 1.5;
         }
 
         .beta-step-actions {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-top: 4px;
+            margin-top: 8px;
         }
 
         .btn-outline {
             display: inline-block;
             border: 2px solid var(--primary);
             color: var(--primary);
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
             text-align: center;
-            transition: background 0.2s, color 0.2s;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
         }
 
         .btn-outline:hover {
             background: var(--primary);
             color: var(--white);
+            transform: translateY(-1px);
         }
 
-        /* Developer */
+        /* ── Developer ── */
         .developer {
             text-align: center;
-            padding: 40px 0;
+            padding: 48px 0;
             border-top: 1px solid #e5e7eb;
         }
 
         .developer h2 {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin: 0 0 6px;
         }
 
         .developer p {
-            color: #6b7280;
+            color: var(--gray-500);
             margin: 0;
         }
 
-        /* Privacy Section */
+        /* ── Privacy Section ── */
         .privacy-section {
             background-color: var(--dark);
-            color: #9ca3af;
-            padding: 60px 0;
-            font-size: 0.9rem;
+            color: var(--gray-400);
+            padding: 80px 0;
+            font-size: 0.92rem;
         }
 
         .privacy-section h2 {
             color: var(--white);
             margin-top: 0;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
         }
 
         .privacy-box {
-            border: 1px solid #374151;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            background: #111827;
+            border: 1px solid var(--gray-700);
+            padding: 28px;
+            border-radius: 12px;
+            margin-top: 24px;
+            background: var(--gray-900);
+            transition: border-color 0.3s;
+        }
+
+        .privacy-box:hover {
+            border-color: var(--gray-500);
+        }
+
+        .privacy-box ul {
+            padding-left: 20px;
+        }
+
+        .privacy-box li {
+            margin-bottom: 8px;
         }
 
         .privacy-box a {
             color: var(--accent);
+            transition: color 0.2s;
+        }
+
+        .privacy-box a:hover {
+            color: #a5b4fc;
         }
 
         .privacy-box a:focus-visible {
             outline-color: var(--accent);
         }
 
-        /* Footer */
+        /* ── Footer ── */
         footer {
             text-align: center;
-            padding: 24px 20px;
-            background: #111827;
-            color: #6b7280;
+            padding: 28px 24px;
+            background: var(--gray-900);
+            color: var(--gray-500);
             font-size: 0.8rem;
             line-height: 2;
         }
 
         footer a {
-            color: #9ca3af;
+            color: var(--gray-400);
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         footer a:hover {
@@ -297,75 +583,224 @@
             outline-color: var(--accent);
         }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            header {
+                padding: 120px 0 60px;
+            }
+
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            .subtitle {
+                font-size: 1.25rem;
+            }
+
+            .section-header h2,
+            .beta-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .feature-card {
+                padding: 24px 20px;
+            }
+
+            .feature-icon {
+                font-size: 1.8rem;
+            }
+
+            .beta-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .privacy-box {
+                padding: 20px;
+            }
+
+            .orb-1 { width: 250px; height: 250px; }
+            .orb-2 { width: 180px; height: 180px; }
+            .orb-3 { width: 120px; height: 120px; }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 110px 0 48px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                letter-spacing: -1px;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-desc {
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                padding: 14px 28px;
+                font-size: 0.95rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .features-section {
+                padding: 48px 0;
+            }
+
+            .beta-section {
+                padding: 48px 0;
+            }
+
+            .beta-step {
+                padding: 24px;
+            }
+
+            .privacy-section {
+                padding: 48px 0;
+            }
+
+            .btn-outline {
+                padding: 14px 20px;
+            }
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">Focus Pocus</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#beta">Beta</a></li>
+                <li><a href="#privacy">Privacy</a></li>
+            </ul>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#features">Features</a>
+            <a href="#beta">Join Beta</a>
+            <a href="#privacy">Privacy</a>
+        </div>
+    </nav>
+
     <header>
-        <div class="container">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="container hero-content">
             <div class="badge">Now in Closed Beta</div>
             <h1>Focus Pocus</h1>
             <p class="subtitle">Magic for your attention span.</p>
-            <p class="hero-desc">The free, hardware-agnostic NFC app blocker.</p>
-            <a href="#beta" class="btn">Join the Closed Beta</a>
+            <p class="hero-desc">The free, hardware-agnostic NFC app blocker for Android.</p>
+            <a href="#beta" class="btn hero-btn">Join the Closed Beta</a>
         </div>
     </header>
 
     <main>
-        <div class="container">
-            <div class="features">
-                <div class="feature-card">
-                    <span class="feature-icon" aria-hidden="true">🔓</span>
-                    <h2>Bring Your Own Tag</h2>
-                    <p>Don't pay $50 for a "special" brick. Focus Pocus works with any generic NFC tag, sticker, or card you already own.</p>
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Everything you need to stay focused</h2>
+                    <p>Powerful features, zero cost, total privacy.</p>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-icon" aria-hidden="true">🚫</span>
-                    <h2>Hard Blocking</h2>
-                    <p>Block apps via NFC tap, QR code scan, or manual toggle. Enable Talisman Lock Mode for maximum commitment — only your physical tag can lift the block.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon" aria-hidden="true">📅</span>
-                    <h2>Scheduled Rituals</h2>
-                    <p>Set recurring schedules that auto-activate blocking at the right times. Supports overnight spans so your morning routine starts distraction-free.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon" aria-hidden="true">⚡</span>
-                    <h2>Smart Triggers</h2>
-                    <p>Auto-activate focus mode when you connect to a specific Wi-Fi network or Bluetooth device — your office router, your desk speaker, your call.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon" aria-hidden="true">⏱️</span>
-                    <h2>App Time Limits</h2>
-                    <p>Set daily usage quotas per app. Limits are enforced even outside focus sessions so mindless scrolling stays in check all day.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon" aria-hidden="true">🔔</span>
-                    <h2>Notification Blocking</h2>
-                    <p>Automatically silence notifications from blocked apps during focus sessions so pings can't pull you back in.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon" aria-hidden="true">📊</span>
-                    <h2>Insights &amp; Streaks</h2>
-                    <p>Track focus sessions, daily streaks, blocking stats, and per-app usage over time — all stored privately on your device.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon" aria-hidden="true">💸</span>
-                    <h2>Completely Free</h2>
-                    <p>No subscriptions, no ads, no data collection. Productivity shouldn't be a luxury.</p>
+                <div class="features stagger">
+                    <div class="feature-card reveal">
+                        <span class="feature-icon" aria-hidden="true">🔓</span>
+                        <h3>Bring Your Own Tag</h3>
+                        <p>Don't pay $50 for a "special" brick. Works with any generic NFC tag, sticker, or card you already own.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <span class="feature-icon" aria-hidden="true">🚫</span>
+                        <h3>Hard Blocking</h3>
+                        <p>Block apps via NFC tap, QR code, or manual toggle. Enable Talisman Lock Mode for maximum commitment.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <span class="feature-icon" aria-hidden="true">📅</span>
+                        <h3>Scheduled Rituals</h3>
+                        <p>Set recurring schedules that auto-activate blocking. Supports overnight spans for distraction-free mornings.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <span class="feature-icon" aria-hidden="true">⚡</span>
+                        <h3>Smart Triggers</h3>
+                        <p>Auto-activate focus when you connect to a specific Wi-Fi or Bluetooth device — your office, your call.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <span class="feature-icon" aria-hidden="true">⏱️</span>
+                        <h3>App Time Limits</h3>
+                        <p>Set daily usage quotas per app. Limits are enforced even outside focus sessions to keep scrolling in check.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <span class="feature-icon" aria-hidden="true">🔔</span>
+                        <h3>Notification Blocking</h3>
+                        <p>Automatically silence notifications from blocked apps during focus sessions so pings can't pull you back.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <span class="feature-icon" aria-hidden="true">📊</span>
+                        <h3>Insights &amp; Streaks</h3>
+                        <p>Track focus sessions, daily streaks, and per-app usage over time — all stored privately on your device.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <span class="feature-icon" aria-hidden="true">💸</span>
+                        <h3>Completely Free</h3>
+                        <p>No subscriptions, no ads, no data collection. Productivity shouldn't be a luxury.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <section class="beta-section" id="beta">
             <div class="container">
-                <h2>Join the Closed Beta</h2>
-                <p class="beta-desc">Get early access to Focus Pocus and help shape the app before public launch.</p>
-                <div class="beta-steps">
-                    <div class="beta-step">
+                <h2 class="reveal">Join the Closed Beta</h2>
+                <p class="beta-desc reveal">Get early access to Focus Pocus and help shape the app before public launch.</p>
+                <div class="beta-steps stagger">
+                    <div class="beta-step reveal">
                         <span class="step-number" aria-hidden="true">1</span>
                         <h3>Request Access</h3>
                         <p>Send a request to join the Focus Pocus Testers Google Group. You'll receive a confirmation once approved.</p>
@@ -373,7 +808,7 @@
                             <a href="https://groups.google.com/g/focus-pocus-testers" class="btn" target="_blank" rel="noopener noreferrer">Join the Testers Group</a>
                         </div>
                     </div>
-                    <div class="beta-step">
+                    <div class="beta-step reveal">
                         <span class="step-number" aria-hidden="true">2</span>
                         <h3>Download the App</h3>
                         <p>Once you're approved and added to the group, use one of the links below to install the beta.</p>
@@ -386,27 +821,29 @@
             </div>
         </section>
 
-        <div class="container developer">
+        <div class="container developer reveal">
             <h2>Developed by Infinicada</h2>
             <p>Building tools to help you reclaim your time.</p>
         </div>
 
-        <section class="privacy-section">
+        <section class="privacy-section" id="privacy">
             <div class="container">
-                <h2>Privacy</h2>
-                <p><strong>Effective Date:</strong> January 30, 2026</p>
+                <div class="reveal">
+                    <h2>Privacy</h2>
+                    <p><strong>Effective Date:</strong> January 30, 2026</p>
 
-                <div class="privacy-box">
-                    <p><strong>Your data stays on your device.</strong></p>
-                    <p>Focus Pocus is built with a privacy-first philosophy. All app activity, blocking configurations, and usage stats are stored locally and never uploaded.</p>
-                    <ul>
-                        <li><strong>No Personal Data:</strong> No name, email, account, or personal information is ever collected.</li>
-                        <li><strong>No Advertising ID:</strong> The advertising identifier is explicitly removed — there is no cross-app tracking or ad targeting.</li>
-                        <li><strong>No Accounts:</strong> You do not need to create an account to use Focus Pocus.</li>
-                        <li><strong>Permissions Stay Local:</strong> The app requires several Android permissions (Accessibility, NFC, Notifications, Location, Bluetooth, Camera, Usage Stats) to power its features — all data those permissions touch stays on your device and is never uploaded.</li>
-                        <li><strong>Optional Anonymous Analytics:</strong> With your consent, the app sends anonymous crash reports (via Firebase Crashlytics) and basic usage statistics (via Firebase Analytics) to help fix bugs and improve the app. No personal data is included. You choose during setup and can turn this off anytime in Settings.</li>
-                    </ul>
-                    <p>I do not sell or share your data with third parties. <a href="privacy.html">Full privacy policy →</a></p>
+                    <div class="privacy-box">
+                        <p><strong>Your data stays on your device.</strong></p>
+                        <p>Focus Pocus is built with a privacy-first philosophy. All app activity, blocking configurations, and usage stats are stored locally and never uploaded.</p>
+                        <ul>
+                            <li><strong>No Personal Data:</strong> No name, email, account, or personal information is ever collected.</li>
+                            <li><strong>No Advertising ID:</strong> The advertising identifier is explicitly removed — there is no cross-app tracking or ad targeting.</li>
+                            <li><strong>No Accounts:</strong> You do not need to create an account to use Focus Pocus.</li>
+                            <li><strong>Permissions Stay Local:</strong> The app requires several Android permissions to power its features — all data stays on your device and is never uploaded.</li>
+                            <li><strong>Optional Anonymous Analytics:</strong> With your consent, the app sends anonymous crash reports and basic usage statistics to help fix bugs. No personal data is included. You can turn this off anytime in Settings.</li>
+                        </ul>
+                        <p>I do not sell or share your data with third parties. <a href="privacy.html">Full privacy policy →</a></p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -416,6 +853,46 @@
         <p>&copy; 2026 Infinicada. All rights reserved.</p>
         <p><a href="privacy.html">Privacy Policy</a> &middot; <a href="mailto:contact@infinicada.com">contact@infinicada.com</a></p>
     </footer>
+
+    <script>
+        // ── Sticky nav background on scroll ──
+        const navbar = document.getElementById('navbar');
+        const onScroll = () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 20);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        // ── Mobile menu toggle ──
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburgerBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            hamburgerBtn.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Close mobile menu when a link is tapped
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // ── Scroll reveal with IntersectionObserver ──
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        revealElements.forEach(el => observer.observe(el));
+    </script>
 
 </body>
 </html>
