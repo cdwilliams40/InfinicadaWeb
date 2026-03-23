@@ -4,29 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Focus Pocus – Free NFC App Blocker for Android</title>
-    <meta name="description" content="Focus Pocus is a free, privacy-first Android app blocker. Block distracting apps with an NFC tap, QR code, or schedule. No subscriptions, no ads, no data collection.">
+    <meta name="description" content="Focus Pocus is a free, privacy-first Android app blocker. Block distracting apps and websites with NFC tags, QR codes, or schedules. No subscriptions, no ads, no data collection.">
 
     <!-- Open Graph / Social Sharing -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Focus Pocus – Free NFC App Blocker for Android">
-    <meta property="og:description" content="Block distracting apps with an NFC tap, QR code, or schedule. Free, private, and hardware-agnostic.">
+    <meta property="og:description" content="Block distracting apps and websites with NFC tags, QR codes, or schedules. Free, private, and completely open source.">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Focus Pocus – Free NFC App Blocker for Android">
-    <meta name="twitter:description" content="Block distracting apps with an NFC tap, QR code, or schedule. Free, private, and hardware-agnostic.">
+    <meta name="twitter:description" content="Block distracting apps and websites with NFC tags, QR codes, or schedules. Free, private, and completely open source.">
 
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
 
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
-            --dark: #1f2937;
-            --light: #f3f4f6;
+            --primary: #6d28d9;
+            --primary-dark: #5b21b6;
+            --primary-light: #8b5cf6;
+            --dark: #1a1a2e;
+            --light: #f5f3ff;
             --white: #ffffff;
-            --accent: #818cf8;
+            --accent: #a78bfa;
+            --gold: #fbbf24;
+            --gray-300: #d1d5db;
             --gray-400: #9ca3af;
             --gray-500: #6b7280;
             --gray-600: #4b5563;
@@ -44,7 +52,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
             line-height: 1.6;
@@ -79,20 +87,27 @@
         }
 
         .nav-inner {
-            max-width: 960px;
+            max-width: 1060px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 60px;
+            height: 64px;
         }
 
         .nav-logo {
             font-weight: 800;
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             color: var(--primary);
             text-decoration: none;
             letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-logo-icon {
+            font-size: 1.4rem;
         }
 
         .nav-links {
@@ -131,7 +146,7 @@
         .mobile-menu {
             display: none;
             position: fixed;
-            top: 60px;
+            top: 64px;
             left: 0;
             right: 0;
             background: rgba(255, 255, 255, 0.97);
@@ -172,7 +187,7 @@
 
         /* ── Layout ── */
         .container {
-            max-width: 960px;
+            max-width: 1060px;
             margin: 0 auto;
             padding: 0 24px;
         }
@@ -181,8 +196,8 @@
         header {
             position: relative;
             text-align: center;
-            padding: 140px 0 80px;
-            background: linear-gradient(150deg, #eef2ff 0%, #e0e7ff 40%, #ffffff 100%);
+            padding: 150px 0 100px;
+            background: linear-gradient(160deg, #ede9fe 0%, #ddd6fe 30%, #e0e7ff 60%, #ffffff 100%);
             overflow: hidden;
         }
 
@@ -191,35 +206,45 @@
             position: absolute;
             border-radius: 50%;
             filter: blur(60px);
-            opacity: 0.5;
+            opacity: 0.45;
             pointer-events: none;
         }
 
         .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: #c7d2fe;
-            top: -100px;
+            width: 450px;
+            height: 450px;
+            background: #c4b5fd;
+            top: -120px;
             right: -100px;
             animation: float 8s ease-in-out infinite;
         }
 
         .orb-2 {
-            width: 300px;
-            height: 300px;
-            background: #a5b4fc;
-            bottom: -80px;
-            left: -60px;
+            width: 350px;
+            height: 350px;
+            background: #a78bfa;
+            bottom: -100px;
+            left: -80px;
             animation: float 10s ease-in-out infinite reverse;
         }
 
         .orb-3 {
             width: 200px;
             height: 200px;
-            background: #e0e7ff;
-            top: 50%;
-            left: 60%;
+            background: #ddd6fe;
+            top: 40%;
+            left: 55%;
             animation: float 12s ease-in-out infinite 2s;
+        }
+
+        .orb-4 {
+            width: 150px;
+            height: 150px;
+            background: #fde68a;
+            top: 20%;
+            left: 10%;
+            opacity: 0.25;
+            animation: float 14s ease-in-out infinite 1s;
         }
 
         @keyframes float {
@@ -235,7 +260,7 @@
 
         .badge {
             display: inline-block;
-            background-color: rgba(79, 70, 229, 0.1);
+            background-color: rgba(109, 40, 217, 0.1);
             color: var(--primary);
             font-size: 0.75rem;
             font-weight: 700;
@@ -244,22 +269,22 @@
             padding: 6px 16px;
             border-radius: 99px;
             margin-bottom: 24px;
-            border: 1px solid rgba(79, 70, 229, 0.15);
+            border: 1px solid rgba(109, 40, 217, 0.15);
             animation: fadeInUp 0.6s ease-out both;
         }
 
         h1 {
-            font-size: 3.8rem;
+            font-size: 4rem;
             margin: 0 0 12px;
             color: var(--primary);
-            letter-spacing: -1.5px;
-            line-height: 1.1;
+            letter-spacing: -2px;
+            line-height: 1.05;
             animation: fadeInUp 0.6s ease-out 0.1s both;
         }
 
         .subtitle {
             font-size: 1.5rem;
-            color: var(--gray-500);
+            color: var(--gray-600);
             margin: 0 0 8px;
             font-weight: 400;
             animation: fadeInUp 0.6s ease-out 0.2s both;
@@ -268,7 +293,7 @@
         .hero-desc {
             font-size: 1.05rem;
             color: var(--gray-400);
-            margin: 0 0 36px;
+            margin: 0 0 40px;
             animation: fadeInUp 0.6s ease-out 0.3s both;
         }
 
@@ -277,31 +302,62 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
         .btn {
             display: inline-block;
             background-color: var(--primary);
             color: var(--white);
             padding: 14px 32px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
             transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+            box-shadow: 0 4px 14px rgba(109, 40, 217, 0.3);
         }
 
         .btn:hover {
             background-color: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(109, 40, 217, 0.4);
         }
 
         .btn:active {
             transform: translateY(0);
         }
 
-        .hero-btn {
-            animation: fadeInUp 0.6s ease-out 0.4s both;
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 14px 20px;
+            border-radius: 12px;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .btn-ghost:hover {
+            color: var(--primary);
+            background: rgba(109, 40, 217, 0.06);
+        }
+
+        .btn-ghost svg {
+            transition: transform 0.2s;
+        }
+
+        .btn-ghost:hover svg {
+            transform: translateX(2px);
         }
 
         .btn-disabled {
@@ -311,6 +367,34 @@
             box-shadow: none;
         }
 
+        /* ── Trust Banner ── */
+        .trust-banner {
+            background: var(--white);
+            border-bottom: 1px solid #f0ecff;
+            padding: 24px 0;
+        }
+
+        .trust-items {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        .trust-icon {
+            font-size: 1.1rem;
+        }
+
         /* ── Features Grid ── */
         .features-section {
             padding: 80px 0;
@@ -318,11 +402,11 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 56px;
         }
 
         .section-header h2 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--dark);
             margin: 0 0 8px;
             letter-spacing: -0.5px;
@@ -336,43 +420,58 @@
 
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
 
         .feature-card {
-            background: var(--light);
-            padding: 32px 28px;
+            background: var(--white);
+            padding: 32px 24px;
             border-radius: 16px;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid transparent;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid #ede9fe;
+            position: relative;
         }
 
         .feature-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-            border-color: #e5e7eb;
-            background: var(--white);
+            box-shadow: 0 12px 40px rgba(109, 40, 217, 0.1);
+            border-color: #c4b5fd;
         }
 
-        .feature-icon {
-            font-size: 2.2rem;
+        .feature-icon-wrap {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 16px;
-            display: block;
+            font-size: 1.6rem;
         }
+
+        .feature-icon-wrap.purple { background: #ede9fe; }
+        .feature-icon-wrap.blue { background: #e0e7ff; }
+        .feature-icon-wrap.amber { background: #fef3c7; }
+        .feature-icon-wrap.green { background: #d1fae5; }
+        .feature-icon-wrap.rose { background: #ffe4e6; }
+        .feature-icon-wrap.cyan { background: #cffafe; }
+        .feature-icon-wrap.orange { background: #ffedd5; }
+        .feature-icon-wrap.indigo { background: #e0e7ff; }
 
         .feature-card h3 {
-            font-size: 1.05rem;
-            margin: 0 0 8px;
+            font-size: 1rem;
+            margin: 0 0 6px;
             color: var(--dark);
+            font-weight: 700;
         }
 
         .feature-card p {
-            font-size: 0.92rem;
+            font-size: 0.88rem;
             margin: 0;
-            color: var(--gray-600);
-            line-height: 1.5;
+            color: var(--gray-500);
+            line-height: 1.55;
         }
 
         /* Scroll reveal */
@@ -389,24 +488,24 @@
 
         /* Staggered children */
         .stagger > .reveal:nth-child(1) { transition-delay: 0s; }
-        .stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
-        .stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
-        .stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
-        .stagger > .reveal:nth-child(5) { transition-delay: 0.32s; }
-        .stagger > .reveal:nth-child(6) { transition-delay: 0.4s; }
-        .stagger > .reveal:nth-child(7) { transition-delay: 0.48s; }
-        .stagger > .reveal:nth-child(8) { transition-delay: 0.56s; }
+        .stagger > .reveal:nth-child(2) { transition-delay: 0.06s; }
+        .stagger > .reveal:nth-child(3) { transition-delay: 0.12s; }
+        .stagger > .reveal:nth-child(4) { transition-delay: 0.18s; }
+        .stagger > .reveal:nth-child(5) { transition-delay: 0.24s; }
+        .stagger > .reveal:nth-child(6) { transition-delay: 0.30s; }
+        .stagger > .reveal:nth-child(7) { transition-delay: 0.36s; }
+        .stagger > .reveal:nth-child(8) { transition-delay: 0.42s; }
 
         /* ── Beta Section ── */
         .beta-section {
             padding: 80px 0;
-            background: linear-gradient(150deg, #ede9fe 0%, #e0e7ff 100%);
+            background: linear-gradient(160deg, #f5f3ff 0%, #ede9fe 50%, #e0e7ff 100%);
         }
 
         .beta-section h2 {
             text-align: center;
-            font-size: 2rem;
-            color: var(--primary);
+            font-size: 2.2rem;
+            color: var(--dark);
             margin: 0 0 8px;
             letter-spacing: -0.5px;
         }
@@ -420,8 +519,11 @@
 
         .beta-steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0;
+            align-items: stretch;
+            max-width: 780px;
+            margin: 0 auto;
         }
 
         .beta-step {
@@ -432,12 +534,25 @@
             flex-direction: column;
             gap: 12px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(79, 70, 229, 0.08);
+            border: 1px solid rgba(109, 40, 217, 0.08);
         }
 
         .beta-step:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 12px 32px rgba(109, 40, 217, 0.12);
+        }
+
+        .beta-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+            color: var(--gray-300);
+        }
+
+        .beta-connector svg {
+            width: 32px;
+            height: 32px;
         }
 
         .step-number {
@@ -446,7 +561,7 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: var(--white);
             border-radius: 12px;
             font-weight: 700;
@@ -461,17 +576,18 @@
         }
 
         .beta-step p {
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             color: var(--gray-500);
             margin: 0;
-            line-height: 1.5;
+            line-height: 1.55;
         }
 
         .beta-step-actions {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-top: 8px;
+            margin-top: auto;
+            padding-top: 8px;
         }
 
         .btn-outline {
@@ -479,7 +595,7 @@
             border: 2px solid var(--primary);
             color: var(--primary);
             padding: 12px 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
@@ -496,13 +612,14 @@
         /* ── Developer ── */
         .developer {
             text-align: center;
-            padding: 48px 0;
-            border-top: 1px solid #e5e7eb;
+            padding: 56px 0;
+            border-top: 1px solid #ede9fe;
         }
 
         .developer h2 {
             font-size: 1.15rem;
             margin: 0 0 6px;
+            color: var(--dark);
         }
 
         .developer p {
@@ -526,16 +643,16 @@
         }
 
         .privacy-box {
-            border: 1px solid var(--gray-700);
+            border: 1px solid rgba(167, 139, 250, 0.15);
             padding: 28px;
-            border-radius: 12px;
+            border-radius: 16px;
             margin-top: 24px;
-            background: var(--gray-900);
+            background: rgba(17, 24, 39, 0.6);
             transition: border-color 0.3s;
         }
 
         .privacy-box:hover {
-            border-color: var(--gray-500);
+            border-color: rgba(167, 139, 250, 0.3);
         }
 
         .privacy-box ul {
@@ -552,7 +669,7 @@
         }
 
         .privacy-box a:hover {
-            color: #a5b4fc;
+            color: #c4b5fd;
         }
 
         .privacy-box a:focus-visible {
@@ -561,12 +678,33 @@
 
         /* ── Footer ── */
         footer {
-            text-align: center;
-            padding: 28px 24px;
             background: var(--gray-900);
             color: var(--gray-500);
-            font-size: 0.8rem;
-            line-height: 2;
+            padding: 40px 24px 28px;
+            font-size: 0.85rem;
+        }
+
+        .footer-inner {
+            max-width: 1060px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-brand {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--gray-400);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         footer a {
@@ -583,7 +721,23 @@
             outline-color: var(--accent);
         }
 
+        .footer-bottom {
+            max-width: 1060px;
+            margin: 20px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
         /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -594,7 +748,7 @@
             }
 
             header {
-                padding: 120px 0 60px;
+                padding: 120px 0 70px;
             }
 
             h1 {
@@ -607,33 +761,54 @@
 
             .section-header h2,
             .beta-section h2 {
-                font-size: 1.6rem;
+                font-size: 1.7rem;
             }
 
             .features {
                 grid-template-columns: 1fr 1fr;
-                gap: 16px;
+                gap: 14px;
             }
 
             .feature-card {
-                padding: 24px 20px;
+                padding: 24px 18px;
             }
 
-            .feature-icon {
-                font-size: 1.8rem;
+            .feature-icon-wrap {
+                width: 48px;
+                height: 48px;
+                font-size: 1.4rem;
             }
 
             .beta-steps {
                 grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .beta-connector {
+                display: none;
             }
 
             .privacy-box {
                 padding: 20px;
             }
 
-            .orb-1 { width: 250px; height: 250px; }
-            .orb-2 { width: 180px; height: 180px; }
-            .orb-3 { width: 120px; height: 120px; }
+            .orb-1 { width: 280px; height: 280px; }
+            .orb-2 { width: 200px; height: 200px; }
+            .orb-3 { width: 130px; height: 130px; }
+            .orb-4 { display: none; }
+
+            .trust-items {
+                gap: 20px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -642,7 +817,7 @@
             }
 
             h1 {
-                font-size: 2.2rem;
+                font-size: 2.4rem;
                 letter-spacing: -1px;
             }
 
@@ -654,11 +829,20 @@
                 font-size: 0.95rem;
             }
 
+            .hero-actions {
+                flex-direction: column;
+            }
+
             .btn {
                 padding: 14px 28px;
                 font-size: 0.95rem;
                 width: 100%;
                 text-align: center;
+            }
+
+            .btn-ghost {
+                width: 100%;
+                justify-content: center;
             }
 
             .features {
@@ -683,6 +867,14 @@
 
             .btn-outline {
                 padding: 14px 20px;
+            }
+
+            .trust-items {
+                gap: 16px;
+            }
+
+            .trust-item {
+                font-size: 0.82rem;
             }
         }
 
@@ -709,7 +901,10 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-inner">
-            <a href="#" class="nav-logo">Focus Pocus</a>
+            <a href="#" class="nav-logo">
+                <span class="nav-logo-icon" aria-hidden="true">🔮</span>
+                Focus Pocus
+            </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#beta">Beta</a></li>
@@ -734,62 +929,97 @@
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
         <div class="container hero-content">
             <div class="badge">Now in Closed Beta</div>
             <h1>Focus Pocus</h1>
             <p class="subtitle">Magic for your attention span.</p>
-            <p class="hero-desc">The free, hardware-agnostic NFC app blocker for Android.</p>
-            <a href="#beta" class="btn hero-btn">Join the Closed Beta</a>
+            <p class="hero-desc">The free, privacy-first app blocker for Android. No ads, no subscriptions, no data collection.</p>
+            <div class="hero-actions">
+                <a href="#beta" class="btn">Join the Closed Beta</a>
+                <a href="#features" class="btn-ghost">
+                    See features
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 12l4-4-4-4"/>
+                    </svg>
+                </a>
+            </div>
         </div>
     </header>
+
+    <!-- Trust Banner -->
+    <div class="trust-banner">
+        <div class="trust-items">
+            <div class="trust-item">
+                <span class="trust-icon" aria-hidden="true">💸</span>
+                100% Free
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon" aria-hidden="true">🔒</span>
+                Privacy-First
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon" aria-hidden="true">🚫</span>
+                No Ads
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon" aria-hidden="true">📖</span>
+                Open Source
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon" aria-hidden="true">🔔</span>
+                Notification Silencing
+            </div>
+        </div>
+    </div>
 
     <main>
         <section class="features-section" id="features">
             <div class="container">
                 <div class="section-header reveal">
                     <h2>Everything you need to stay focused</h2>
-                    <p>Powerful features, zero cost, total privacy.</p>
+                    <p>Block apps and websites, earn rewards, track your progress — all for free.</p>
                 </div>
                 <div class="features stagger">
                     <div class="feature-card reveal">
-                        <span class="feature-icon" aria-hidden="true">🔓</span>
+                        <div class="feature-icon-wrap purple" aria-hidden="true">🔓</div>
                         <h3>Bring Your Own Tag</h3>
                         <p>Don't pay $50 for a "special" brick. Works with any generic NFC tag, sticker, or card you already own.</p>
                     </div>
                     <div class="feature-card reveal">
-                        <span class="feature-icon" aria-hidden="true">🚫</span>
-                        <h3>Hard Blocking</h3>
-                        <p>Block apps via NFC tap, QR code, or manual toggle. Enable Talisman Lock Mode for maximum commitment.</p>
+                        <div class="feature-icon-wrap rose" aria-hidden="true">🚫</div>
+                        <h3>Enchantments</h3>
+                        <p>Create custom blocklists with Blacklist or Whitelist mode. Block apps via NFC tap, QR code, or manual toggle with optional Talisman Lock.</p>
                     </div>
                     <div class="feature-card reveal">
-                        <span class="feature-icon" aria-hidden="true">📅</span>
+                        <div class="feature-icon-wrap indigo" aria-hidden="true">🪄</div>
+                        <h3>Quick Spells</h3>
+                        <p>Save your favorite focus configurations as presets for one-tap activation. Bind them to NFC tags or QR codes for instant casting.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon-wrap blue" aria-hidden="true">📅</div>
                         <h3>Scheduled Rituals</h3>
-                        <p>Set recurring schedules that auto-activate blocking. Supports overnight spans for distraction-free mornings.</p>
+                        <p>Set recurring schedules that auto-activate blocking with configurable breaks. Supports overnight spans for distraction-free mornings.</p>
                     </div>
                     <div class="feature-card reveal">
-                        <span class="feature-icon" aria-hidden="true">⚡</span>
-                        <h3>Smart Triggers</h3>
-                        <p>Auto-activate focus when you connect to a specific Wi-Fi or Bluetooth device — your office, your call.</p>
+                        <div class="feature-icon-wrap cyan" aria-hidden="true">🌐</div>
+                        <h3>Website Blocking</h3>
+                        <p>Block distracting websites across 16+ browsers including Chrome, Firefox, Edge, Brave, and more during focus sessions.</p>
                     </div>
                     <div class="feature-card reveal">
-                        <span class="feature-icon" aria-hidden="true">⏱️</span>
+                        <div class="feature-icon-wrap orange" aria-hidden="true">⏱️</div>
                         <h3>App Time Limits</h3>
                         <p>Set daily usage quotas per app. Limits are enforced even outside focus sessions to keep scrolling in check.</p>
                     </div>
                     <div class="feature-card reveal">
-                        <span class="feature-icon" aria-hidden="true">🔔</span>
-                        <h3>Notification Blocking</h3>
-                        <p>Automatically silence notifications from blocked apps during focus sessions so pings can't pull you back.</p>
+                        <div class="feature-icon-wrap amber" aria-hidden="true">🏆</div>
+                        <h3>Conditional Unlocks</h3>
+                        <p>Reward yourself by unlocking blocked apps after spending time in a productive app. Build healthy habits with positive reinforcement.</p>
                     </div>
                     <div class="feature-card reveal">
-                        <span class="feature-icon" aria-hidden="true">📊</span>
+                        <div class="feature-icon-wrap green" aria-hidden="true">📊</div>
                         <h3>Insights &amp; Streaks</h3>
                         <p>Track focus sessions, daily streaks, and per-app usage over time — all stored privately on your device.</p>
-                    </div>
-                    <div class="feature-card reveal">
-                        <span class="feature-icon" aria-hidden="true">💸</span>
-                        <h3>Completely Free</h3>
-                        <p>No subscriptions, no ads, no data collection. Productivity shouldn't be a luxury.</p>
                     </div>
                 </div>
             </div>
@@ -807,6 +1037,11 @@
                         <div class="beta-step-actions">
                             <a href="https://groups.google.com/g/focus-pocus-testers" class="btn" target="_blank" rel="noopener noreferrer">Join the Testers Group</a>
                         </div>
+                    </div>
+                    <div class="beta-connector" aria-hidden="true">
+                        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 16h16M20 10l6 6-6 6"/>
+                        </svg>
                     </div>
                     <div class="beta-step reveal">
                         <span class="step-number" aria-hidden="true">2</span>
@@ -850,8 +1085,17 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Infinicada. All rights reserved.</p>
-        <p><a href="privacy.html">Privacy Policy</a> &middot; <a href="mailto:contact@infinicada.com">contact@infinicada.com</a></p>
+        <div class="footer-inner">
+            <span class="footer-brand">Infinicada</span>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="https://github.com/cdwilliams40/FocusPocus" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="mailto:contact@infinicada.com">contact@infinicada.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Infinicada. All rights reserved.
+        </div>
     </footer>
 
     <script>
