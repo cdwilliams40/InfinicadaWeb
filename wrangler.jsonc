@@ -1,0 +1,11 @@
+{
+	"$schema": "https://unpkg.com/wrangler/config-schema.json",
+	// Must match the existing Worker name in the Cloudflare dashboard so
+	// builds update it instead of creating a new Worker.
+	"name": "infinicadaweb",
+	"compatibility_date": "2026-07-01",
+	// Static-assets-only Worker: serve the site files from the repo root.
+	"assets": {
+		"directory": "./"
+	}
+}

@@ -4,43 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Focus Pocus – Free NFC App Blocker for Android</title>
-    <meta name="description" content="Focus Pocus is a free, privacy-first Android app blocker. Block distracting apps and websites with NFC tags, QR codes, or schedules. No subscriptions, no ads, no data collection.">
+    <meta name="description" content="Focus Pocus is a free, privacy-first Android app blocker. Cast focus spells with NFC talismans, QR codes, or schedules. Block apps and websites, set time limits, earn unlocks. No subscriptions, no ads, no data collection.">
 
     <!-- Open Graph / Social Sharing -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Focus Pocus – Free NFC App Blocker for Android">
-    <meta property="og:description" content="Block distracting apps and websites with NFC tags, QR codes, or schedules. Free, private, and completely open source.">
+    <meta property="og:description" content="Cast focus spells with NFC talismans, QR codes, or schedules. Block apps and websites, set time limits, earn unlocks. Free, private, and open source.">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Focus Pocus – Free NFC App Blocker for Android">
-    <meta name="twitter:description" content="Block distracting apps and websites with NFC tags, QR codes, or schedules. Free, private, and completely open source.">
+    <meta name="twitter:description" content="Cast focus spells with NFC talismans, QR codes, or schedules. Block apps and websites, set time limits, earn unlocks. Free, private, and open source.">
 
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
 
-    <!-- Font -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
 
     <style>
+        /*
+         * Palette mirrors the app's Material 3 dark theme
+         * (ui/theme/Color.kt in the FocusPocus repo).
+         */
         :root {
-            --primary: #6d28d9;
-            --primary-dark: #5b21b6;
-            --primary-light: #8b5cf6;
-            --dark: #1a1a2e;
-            --light: #f5f3ff;
-            --white: #ffffff;
-            --accent: #a78bfa;
-            --gold: #fbbf24;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
+            --bg: #14111F;
+            --surface-lowest: #0E0B18;
+            --surface-low: #1C1828;
+            --surface: #201C2D;
+            --surface-high: #2B2638;
+            --surface-highest: #363043;
+            --text: #E7E1F0;
+            --text-muted: #CBC4DB;
+            --text-faint: #948EA5;
+            --primary: #CDBCF5;
+            --on-primary: #322062;
+            --primary-container: #49397A;
+            --on-primary-container: #E8DEFF;
+            --gold: #E9C16C;
+            --gold-container: #5A431A;
+            --on-gold-container: #FFDEA6;
+            --outline: #49445A;
+            --green: #7DD3A0;
+            --rose: #F0A8B8;
+            --cyan: #8DD3E0;
         }
 
         * {
@@ -51,14 +60,23 @@
             scroll-behavior: smooth;
         }
 
+        /* Keep anchored sections clear of the fixed nav */
+        [id] {
+            scroll-margin-top: 80px;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--white);
+            color: var(--text);
+            background-color: var(--bg);
             overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Fraunces', Georgia, serif;
         }
 
         /* Accessibility: visible focus styles for keyboard navigation */
@@ -66,6 +84,11 @@
             outline: 3px solid var(--primary);
             outline-offset: 3px;
             border-radius: 4px;
+        }
+
+        ::selection {
+            background: var(--primary-container);
+            color: var(--on-primary-container);
         }
 
         /* ── Navigation ── */
@@ -76,18 +99,19 @@
             right: 0;
             z-index: 1000;
             padding: 0 24px;
-            transition: background 0.3s, box-shadow 0.3s;
+            transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
+            border-bottom: 1px solid transparent;
         }
 
         nav.scrolled {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(20, 17, 31, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+            border-bottom-color: var(--outline);
         }
 
         .nav-inner {
-            max-width: 1060px;
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -96,11 +120,12 @@
         }
 
         .nav-logo {
-            font-weight: 800;
-            font-size: 1.2rem;
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 600;
+            font-size: 1.25rem;
             color: var(--primary);
             text-decoration: none;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.3px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -116,11 +141,12 @@
             list-style: none;
             margin: 0;
             padding: 0;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--gray-500);
+            color: var(--text-muted);
             font-size: 0.9rem;
             font-weight: 500;
             transition: color 0.2s;
@@ -130,13 +156,25 @@
             color: var(--primary);
         }
 
+        .nav-cta {
+            background: var(--primary);
+            color: var(--on-primary) !important;
+            padding: 8px 18px;
+            border-radius: 99px;
+            font-weight: 600 !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--on-primary-container);
+        }
+
         .hamburger {
             display: none;
             background: none;
             border: none;
             cursor: pointer;
             padding: 8px;
-            color: var(--dark);
+            color: var(--text);
         }
 
         .hamburger svg {
@@ -149,10 +187,10 @@
             top: 64px;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.97);
+            background: rgba(20, 17, 31, 0.97);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid var(--outline);
             padding: 16px 24px;
             z-index: 999;
         }
@@ -166,10 +204,10 @@
             display: block;
             padding: 12px 0;
             text-decoration: none;
-            color: var(--dark);
+            color: var(--text);
             font-weight: 500;
             font-size: 1rem;
-            border-bottom: 1px solid var(--light);
+            border-bottom: 1px solid var(--surface-high);
         }
 
         .mobile-menu a:last-child {
@@ -187,7 +225,7 @@
 
         /* ── Layout ── */
         .container {
-            max-width: 1060px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 0 24px;
         }
@@ -195,9 +233,11 @@
         /* ── Hero ── */
         header {
             position: relative;
-            text-align: center;
-            padding: 150px 0 100px;
-            background: linear-gradient(160deg, #ede9fe 0%, #ddd6fe 30%, #e0e7ff 60%, #ffffff 100%);
+            padding: 140px 0 90px;
+            background:
+                radial-gradient(ellipse 80% 55% at 70% 10%, rgba(73, 57, 122, 0.45) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 45% at 15% 85%, rgba(90, 67, 26, 0.25) 0%, transparent 65%),
+                var(--bg);
             overflow: hidden;
         }
 
@@ -205,46 +245,35 @@
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.45;
+            filter: blur(70px);
             pointer-events: none;
         }
 
         .orb-1 {
-            width: 450px;
-            height: 450px;
-            background: #c4b5fd;
+            width: 420px;
+            height: 420px;
+            background: rgba(101, 80, 164, 0.35);
             top: -120px;
             right: -100px;
-            animation: float 8s ease-in-out infinite;
+            animation: float 9s ease-in-out infinite;
         }
 
         .orb-2 {
-            width: 350px;
-            height: 350px;
-            background: #a78bfa;
+            width: 320px;
+            height: 320px;
+            background: rgba(73, 57, 122, 0.4);
             bottom: -100px;
             left: -80px;
-            animation: float 10s ease-in-out infinite reverse;
+            animation: float 11s ease-in-out infinite reverse;
         }
 
         .orb-3 {
-            width: 200px;
-            height: 200px;
-            background: #ddd6fe;
-            top: 40%;
-            left: 55%;
-            animation: float 12s ease-in-out infinite 2s;
-        }
-
-        .orb-4 {
-            width: 150px;
-            height: 150px;
-            background: #fde68a;
-            top: 20%;
-            left: 10%;
-            opacity: 0.25;
-            animation: float 14s ease-in-out infinite 1s;
+            width: 180px;
+            height: 180px;
+            background: rgba(233, 193, 108, 0.14);
+            top: 25%;
+            left: 42%;
+            animation: float 13s ease-in-out infinite 2s;
         }
 
         @keyframes float {
@@ -253,15 +282,34 @@
             66% { transform: translate(-10px, 15px) scale(0.95); }
         }
 
-        .hero-content {
+        /* Twinkling sparkles */
+        .sparkle {
+            position: absolute;
+            color: var(--gold);
+            pointer-events: none;
+            animation: twinkle 4s ease-in-out infinite;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.15; transform: scale(0.8); }
+            50% { opacity: 0.75; transform: scale(1.1); }
+        }
+
+        .hero-grid {
             position: relative;
             z-index: 1;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 48px;
+            align-items: center;
         }
 
         .badge {
             display: inline-block;
-            background-color: rgba(109, 40, 217, 0.1);
-            color: var(--primary);
+            background: var(--gold-container);
+            color: var(--on-gold-container);
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.08em;
@@ -269,31 +317,38 @@
             padding: 6px 16px;
             border-radius: 99px;
             margin-bottom: 24px;
-            border: 1px solid rgba(109, 40, 217, 0.15);
+            border: 1px solid rgba(233, 193, 108, 0.3);
             animation: fadeInUp 0.6s ease-out both;
         }
 
         h1 {
-            font-size: 4rem;
-            margin: 0 0 12px;
-            color: var(--primary);
-            letter-spacing: -2px;
+            font-size: 3.8rem;
+            margin: 0 0 16px;
+            color: var(--text);
+            letter-spacing: -1px;
             line-height: 1.05;
+            font-weight: 600;
             animation: fadeInUp 0.6s ease-out 0.1s both;
         }
 
+        h1 .magic-word {
+            color: var(--primary);
+            font-style: italic;
+        }
+
         .subtitle {
-            font-size: 1.5rem;
-            color: var(--gray-600);
-            margin: 0 0 8px;
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin: 0 0 12px;
             font-weight: 400;
             animation: fadeInUp 0.6s ease-out 0.2s both;
         }
 
         .hero-desc {
-            font-size: 1.05rem;
-            color: var(--gray-400);
-            margin: 0 0 40px;
+            font-size: 1rem;
+            color: var(--text-faint);
+            margin: 0 0 36px;
+            max-width: 480px;
             animation: fadeInUp 0.6s ease-out 0.3s both;
         }
 
@@ -305,7 +360,6 @@
         .hero-actions {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 16px;
             flex-wrap: wrap;
             animation: fadeInUp 0.6s ease-out 0.4s both;
@@ -314,20 +368,20 @@
         .btn {
             display: inline-block;
             background-color: var(--primary);
-            color: var(--white);
+            color: var(--on-primary);
             padding: 14px 32px;
-            border-radius: 12px;
+            border-radius: 99px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 14px rgba(109, 40, 217, 0.3);
+            box-shadow: 0 4px 20px rgba(205, 188, 245, 0.25);
         }
 
         .btn:hover {
-            background-color: var(--primary-dark);
+            background-color: var(--on-primary-container);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(109, 40, 217, 0.4);
+            box-shadow: 0 6px 28px rgba(205, 188, 245, 0.35);
         }
 
         .btn:active {
@@ -338,18 +392,18 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            color: var(--gray-600);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
             padding: 14px 20px;
-            border-radius: 12px;
+            border-radius: 99px;
             transition: color 0.2s, background 0.2s;
         }
 
         .btn-ghost:hover {
             color: var(--primary);
-            background: rgba(109, 40, 217, 0.06);
+            background: rgba(205, 188, 245, 0.08);
         }
 
         .btn-ghost svg {
@@ -360,18 +414,218 @@
             transform: translateX(2px);
         }
 
-        .btn-disabled {
-            background-color: #d1d5db;
-            color: var(--gray-500);
-            cursor: default;
-            box-shadow: none;
+        /* ── Phone Mockup (mirrors the app's Home screen) ── */
+        .phone-wrap {
+            display: flex;
+            justify-content: center;
+            animation: fadeInUp 0.7s ease-out 0.35s both;
+        }
+
+        .phone {
+            width: 290px;
+            background: var(--surface-lowest);
+            border: 3px solid var(--surface-highest);
+            border-radius: 36px;
+            padding: 14px 12px;
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, 0.55),
+                0 0 80px rgba(101, 80, 164, 0.25);
+            font-size: 0.72rem;
+        }
+
+        .phone-notch {
+            width: 74px;
+            height: 8px;
+            background: var(--surface-highest);
+            border-radius: 99px;
+            margin: 0 auto 14px;
+        }
+
+        .phone-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+
+        .phone-status-chip {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.78rem;
+        }
+
+        .phone-streak {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--gold-container);
+            color: var(--on-gold-container);
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 99px;
+            font-size: 0.66rem;
+        }
+
+        .phone-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-high);
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .phone-card-title {
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-size: 0.72rem;
+        }
+
+        .phone-chips {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .phone-chip {
+            padding: 5px 11px;
+            border-radius: 99px;
+            border: 1px solid var(--outline);
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .phone-chip.selected {
+            background: var(--primary-container);
+            border-color: var(--primary-container);
+            color: var(--on-primary-container);
+            font-weight: 600;
+        }
+
+        .phone-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .phone-row-label {
+            color: var(--text-muted);
+        }
+
+        .phone-toggle {
+            width: 34px;
+            height: 19px;
+            background: var(--primary);
+            border-radius: 99px;
+            position: relative;
+        }
+
+        .phone-toggle::after {
+            content: '';
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            background: var(--on-primary);
+            border-radius: 50%;
+            top: 3px;
+            right: 3px;
+        }
+
+        .phone-ench {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 10px;
+            margin-top: 6px;
+        }
+
+        .phone-ench.selected {
+            background: var(--primary-container);
+        }
+
+        .phone-ench-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: var(--surface-highest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .phone-ench.selected .phone-ench-icon {
+            background: rgba(232, 222, 255, 0.15);
+        }
+
+        .phone-ench-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .phone-ench.selected .phone-ench-name {
+            color: var(--on-primary-container);
+        }
+
+        .phone-ench-mode {
+            color: var(--text-faint);
+            font-size: 0.62rem;
+        }
+
+        .phone-ench.selected .phone-ench-mode {
+            color: rgba(232, 222, 255, 0.7);
+        }
+
+        .phone-cast {
+            display: block;
+            background: var(--primary);
+            color: var(--on-primary);
+            text-align: center;
+            font-weight: 800;
+            padding: 11px;
+            border-radius: 99px;
+            margin: 12px 0;
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 16px rgba(205, 188, 245, 0.3);
+        }
+
+        .phone-nav {
+            display: flex;
+            justify-content: space-around;
+            background: var(--surface-low);
+            border-radius: 16px;
+            padding: 8px 4px;
+        }
+
+        .phone-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            color: var(--text-faint);
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+
+        .phone-nav-item.active {
+            color: var(--primary);
+        }
+
+        .phone-nav-icon {
+            font-size: 0.95rem;
         }
 
         /* ── Trust Banner ── */
         .trust-banner {
-            background: var(--white);
-            border-bottom: 1px solid #f0ecff;
-            padding: 24px 0;
+            background: var(--surface-lowest);
+            border-top: 1px solid var(--outline);
+            border-bottom: 1px solid var(--outline);
+            padding: 22px 0;
         }
 
         .trust-items {
@@ -388,90 +642,398 @@
             gap: 8px;
             font-size: 0.88rem;
             font-weight: 600;
-            color: var(--gray-600);
+            color: var(--text-muted);
         }
 
         .trust-icon {
             font-size: 1.1rem;
         }
 
-        /* ── Features Grid ── */
-        .features-section {
-            padding: 80px 0;
-        }
-
+        /* ── Section headers ── */
         .section-header {
             text-align: center;
             margin-bottom: 56px;
         }
 
+        .eyebrow {
+            display: inline-block;
+            color: var(--gold);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
         .section-header h2 {
-            font-size: 2.2rem;
-            color: var(--dark);
-            margin: 0 0 8px;
+            font-size: 2.3rem;
+            color: var(--text);
+            margin: 0 0 10px;
             letter-spacing: -0.5px;
+            font-weight: 600;
         }
 
         .section-header p {
-            color: var(--gray-500);
-            margin: 0;
+            color: var(--text-faint);
+            margin: 0 auto;
             font-size: 1.05rem;
+            max-width: 560px;
+        }
+
+        /* ── How It Works ── */
+        .how-section {
+            padding: 90px 0 70px;
+        }
+
+        .how-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .how-step {
+            background: var(--surface-low);
+            border: 1px solid var(--surface-high);
+            border-radius: 20px;
+            padding: 32px 28px;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .how-step:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-container);
+        }
+
+        .how-step-num {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 2.6rem;
+            font-weight: 600;
+            color: var(--primary-container);
+            line-height: 1;
+            margin-bottom: 14px;
+        }
+
+        .how-step h3 {
+            font-size: 1.3rem;
+            margin: 0 0 8px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .how-step p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* ── Features Grid ── */
+        .features-section {
+            padding: 70px 0 90px;
         }
 
         .features {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            gap: 18px;
         }
 
         .feature-card {
-            background: var(--white);
-            padding: 32px 24px;
-            border-radius: 16px;
-            text-align: center;
+            background: var(--surface-low);
+            padding: 28px 22px;
+            border-radius: 18px;
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            border: 1px solid #ede9fe;
+            border: 1px solid var(--surface-high);
             position: relative;
         }
 
         .feature-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(109, 40, 217, 0.1);
-            border-color: #c4b5fd;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+            border-color: var(--primary-container);
         }
 
         .feature-icon-wrap {
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             border-radius: 14px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
-            font-size: 1.6rem;
+            margin-bottom: 14px;
+            font-size: 1.5rem;
+            background: var(--surface-high);
         }
 
-        .feature-icon-wrap.purple { background: #ede9fe; }
-        .feature-icon-wrap.blue { background: #e0e7ff; }
-        .feature-icon-wrap.amber { background: #fef3c7; }
-        .feature-icon-wrap.green { background: #d1fae5; }
-        .feature-icon-wrap.rose { background: #ffe4e6; }
-        .feature-icon-wrap.cyan { background: #cffafe; }
-        .feature-icon-wrap.orange { background: #ffedd5; }
-        .feature-icon-wrap.indigo { background: #e0e7ff; }
+        .feature-icon-wrap.gold { background: var(--gold-container); }
+        .feature-icon-wrap.violet { background: var(--primary-container); }
 
         .feature-card h3 {
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin: 0 0 6px;
-            color: var(--dark);
-            font-weight: 700;
+            color: var(--text);
+            font-weight: 600;
         }
 
         .feature-card p {
-            font-size: 0.88rem;
+            font-size: 0.87rem;
             margin: 0;
-            color: var(--gray-500);
+            color: var(--text-faint);
             line-height: 1.55;
+        }
+
+        /* ── Deeper Magic strip ── */
+        .deeper-magic {
+            margin-top: 40px;
+            background: var(--surface-low);
+            border: 1px solid var(--surface-high);
+            border-radius: 20px;
+            padding: 28px 32px;
+        }
+
+        .deeper-magic h3 {
+            margin: 0 0 16px;
+            font-size: 1.1rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .deeper-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px 32px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .deeper-list li {
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .deeper-list li::before {
+            content: '✦';
+            color: var(--gold);
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+
+        .deeper-list strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* ── Mini Game: Banish Blitz ── */
+        .game-section {
+            padding: 90px 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 100%, rgba(73, 57, 122, 0.25) 0%, transparent 65%),
+                var(--bg);
+        }
+
+        .game-wrap {
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        .game-hud {
+            display: flex;
+            justify-content: space-between;
+            background: var(--surface-low);
+            border: 1px solid var(--surface-high);
+            border-radius: 16px;
+            padding: 12px 24px;
+            margin-bottom: 16px;
+        }
+
+        .game-stat {
+            text-align: center;
+        }
+
+        .game-stat-label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-faint);
+        }
+
+        .game-stat-value {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .game-stat-value.gold {
+            color: var(--gold);
+        }
+
+        .game-board {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            background: var(--surface-lowest);
+            border: 1px solid var(--surface-high);
+            border-radius: 24px;
+            padding: 16px;
+        }
+
+        .game-cell {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 1px solid var(--outline);
+            background: radial-gradient(circle at 35% 30%, var(--surface-highest), var(--surface) 72%);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1rem;
+            position: relative;
+            padding: 0;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .game-cell:hover {
+            border-color: var(--primary-container);
+        }
+
+        .game-cell .game-emoji {
+            transform: scale(0);
+            transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        .game-cell.up .game-emoji {
+            transform: scale(1);
+        }
+
+        .game-cell.hit {
+            border-color: var(--gold);
+            box-shadow: 0 0 24px rgba(233, 193, 108, 0.45);
+        }
+
+        .game-cell.oops {
+            border-color: #FFB4AB;
+            box-shadow: 0 0 24px rgba(255, 180, 171, 0.35);
+            animation: cellShake 0.35s;
+        }
+
+        @keyframes cellShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-3px); }
+        }
+
+        .game-pop {
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--gold);
+            pointer-events: none;
+            animation: popFloat 0.6s ease-out forwards;
+            z-index: 3;
+            white-space: nowrap;
+        }
+
+        .game-pop.bad {
+            color: #FFB4AB;
+        }
+
+        @keyframes popFloat {
+            from { opacity: 1; transform: translate(-50%, 0); }
+            to { opacity: 0; transform: translate(-50%, -22px); }
+        }
+
+        .game-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: rgba(20, 17, 31, 0.9);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+            z-index: 2;
+            padding: 24px;
+        }
+
+        .game-overlay.hidden,
+        .game-overlay-score.hidden {
+            display: none;
+        }
+
+        .game-overlay-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .game-overlay-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+            max-width: 300px;
+        }
+
+        .game-overlay-score {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .game-btn {
+            background: var(--primary);
+            color: var(--on-primary);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 12px 30px;
+            border-radius: 99px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .game-btn:hover {
+            background: var(--on-primary-container);
+            transform: translateY(-2px);
+        }
+
+        .game-legend {
+            text-align: center;
+            color: var(--text-faint);
+            font-size: 0.85rem;
+            margin: 14px 0 0;
+        }
+
+        .game-legend strong {
+            color: var(--text-muted);
         }
 
         /* Scroll reveal */
@@ -498,23 +1060,12 @@
 
         /* ── Beta Section ── */
         .beta-section {
-            padding: 80px 0;
-            background: linear-gradient(160deg, #f5f3ff 0%, #ede9fe 50%, #e0e7ff 100%);
-        }
-
-        .beta-section h2 {
-            text-align: center;
-            font-size: 2.2rem;
-            color: var(--dark);
-            margin: 0 0 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .beta-section .beta-desc {
-            text-align: center;
-            color: var(--gray-500);
-            margin: 0 0 48px;
-            font-size: 1.05rem;
+            padding: 90px 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 50% 0%, rgba(73, 57, 122, 0.35) 0%, transparent 65%),
+                var(--surface-lowest);
+            border-top: 1px solid var(--outline);
+            border-bottom: 1px solid var(--outline);
         }
 
         .beta-steps {
@@ -527,19 +1078,19 @@
         }
 
         .beta-step {
-            background: var(--white);
-            border-radius: 16px;
+            background: var(--surface);
+            border-radius: 20px;
             padding: 32px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(109, 40, 217, 0.08);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            border: 1px solid var(--surface-high);
         }
 
         .beta-step:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(109, 40, 217, 0.12);
+            border-color: var(--primary-container);
         }
 
         .beta-connector {
@@ -547,7 +1098,7 @@
             align-items: center;
             justify-content: center;
             padding: 0 12px;
-            color: var(--gray-300);
+            color: var(--outline);
         }
 
         .beta-connector svg {
@@ -561,23 +1112,25 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: var(--white);
+            background: var(--primary-container);
+            color: var(--on-primary-container);
             border-radius: 12px;
             font-weight: 700;
             font-size: 1rem;
             flex-shrink: 0;
+            font-family: 'Fraunces', Georgia, serif;
         }
 
         .beta-step h3 {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin: 0;
-            color: var(--dark);
+            color: var(--text);
+            font-weight: 600;
         }
 
         .beta-step p {
             font-size: 0.9rem;
-            color: var(--gray-500);
+            color: var(--text-faint);
             margin: 0;
             line-height: 1.55;
         }
@@ -590,12 +1143,18 @@
             padding-top: 8px;
         }
 
+        .beta-step-actions .btn {
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+        }
+
         .btn-outline {
             display: inline-block;
             border: 2px solid var(--primary);
             color: var(--primary);
-            padding: 12px 20px;
-            border-radius: 12px;
+            padding: 11px 20px;
+            border-radius: 99px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
@@ -605,54 +1164,56 @@
 
         .btn-outline:hover {
             background: var(--primary);
-            color: var(--white);
+            color: var(--on-primary);
             transform: translateY(-1px);
         }
 
         /* ── Developer ── */
         .developer {
             text-align: center;
-            padding: 56px 0;
-            border-top: 1px solid #ede9fe;
+            padding: 64px 24px;
         }
 
         .developer h2 {
-            font-size: 1.15rem;
+            font-size: 1.3rem;
             margin: 0 0 6px;
-            color: var(--dark);
+            color: var(--text);
+            font-weight: 600;
         }
 
         .developer p {
-            color: var(--gray-500);
+            color: var(--text-faint);
             margin: 0;
         }
 
         /* ── Privacy Section ── */
         .privacy-section {
-            background-color: var(--dark);
-            color: var(--gray-400);
-            padding: 80px 0;
+            background-color: var(--surface-lowest);
+            color: var(--text-muted);
+            padding: 90px 0;
             font-size: 0.92rem;
+            border-top: 1px solid var(--outline);
         }
 
         .privacy-section h2 {
-            color: var(--white);
+            color: var(--text);
             margin-top: 0;
-            font-size: 1.8rem;
+            font-size: 2rem;
             letter-spacing: -0.5px;
+            font-weight: 600;
         }
 
         .privacy-box {
-            border: 1px solid rgba(167, 139, 250, 0.15);
+            border: 1px solid var(--primary-container);
             padding: 28px;
-            border-radius: 16px;
+            border-radius: 20px;
             margin-top: 24px;
-            background: rgba(17, 24, 39, 0.6);
+            background: var(--surface-low);
             transition: border-color 0.3s;
         }
 
         .privacy-box:hover {
-            border-color: rgba(167, 139, 250, 0.3);
+            border-color: var(--primary);
         }
 
         .privacy-box ul {
@@ -663,29 +1224,30 @@
             margin-bottom: 8px;
         }
 
+        .privacy-box strong {
+            color: var(--text);
+        }
+
         .privacy-box a {
-            color: var(--accent);
+            color: var(--primary);
             transition: color 0.2s;
         }
 
         .privacy-box a:hover {
-            color: #c4b5fd;
-        }
-
-        .privacy-box a:focus-visible {
-            outline-color: var(--accent);
+            color: var(--on-primary-container);
         }
 
         /* ── Footer ── */
         footer {
-            background: var(--gray-900);
-            color: var(--gray-500);
+            background: var(--bg);
+            color: var(--text-faint);
             padding: 40px 24px 28px;
             font-size: 0.85rem;
+            border-top: 1px solid var(--outline);
         }
 
         .footer-inner {
-            max-width: 1060px;
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -695,9 +1257,10 @@
         }
 
         .footer-brand {
-            font-weight: 700;
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 600;
             font-size: 1rem;
-            color: var(--gray-400);
+            color: var(--text-muted);
         }
 
         .footer-links {
@@ -708,33 +1271,48 @@
         }
 
         footer a {
-            color: var(--gray-400);
+            color: var(--text-muted);
             text-decoration: none;
             transition: color 0.2s;
         }
 
         footer a:hover {
-            color: var(--accent);
-        }
-
-        footer a:focus-visible {
-            outline-color: var(--accent);
+            color: var(--primary);
         }
 
         .footer-bottom {
-            max-width: 1060px;
+            max-width: 1100px;
             margin: 20px auto 0;
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid var(--surface-high);
             text-align: center;
             font-size: 0.8rem;
-            color: var(--gray-600);
+            color: var(--text-faint);
         }
 
         /* ── Responsive ── */
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 56px;
+            }
+
+            .hero-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
             .features {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .how-steps {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -748,20 +1326,19 @@
             }
 
             header {
-                padding: 120px 0 70px;
+                padding: 110px 0 64px;
             }
 
             h1 {
-                font-size: 2.8rem;
+                font-size: 2.7rem;
             }
 
             .subtitle {
-                font-size: 1.25rem;
+                font-size: 1.15rem;
             }
 
-            .section-header h2,
-            .beta-section h2 {
-                font-size: 1.7rem;
+            .section-header h2 {
+                font-size: 1.8rem;
             }
 
             .features {
@@ -770,13 +1347,17 @@
             }
 
             .feature-card {
-                padding: 24px 18px;
+                padding: 22px 18px;
             }
 
             .feature-icon-wrap {
-                width: 48px;
-                height: 48px;
-                font-size: 1.4rem;
+                width: 46px;
+                height: 46px;
+                font-size: 1.35rem;
+            }
+
+            .deeper-list {
+                grid-template-columns: 1fr;
             }
 
             .beta-steps {
@@ -792,10 +1373,9 @@
                 padding: 20px;
             }
 
-            .orb-1 { width: 280px; height: 280px; }
+            .orb-1 { width: 260px; height: 260px; }
             .orb-2 { width: 200px; height: 200px; }
-            .orb-3 { width: 130px; height: 130px; }
-            .orb-4 { display: none; }
+            .orb-3 { display: none; }
 
             .trust-items {
                 gap: 20px;
@@ -813,16 +1393,16 @@
 
         @media (max-width: 480px) {
             header {
-                padding: 110px 0 48px;
+                padding: 100px 0 48px;
             }
 
             h1 {
-                font-size: 2.4rem;
-                letter-spacing: -1px;
+                font-size: 2.3rem;
+                letter-spacing: -0.5px;
             }
 
             .subtitle {
-                font-size: 1.1rem;
+                font-size: 1.05rem;
             }
 
             .hero-desc {
@@ -845,16 +1425,24 @@
                 justify-content: center;
             }
 
+            .phone {
+                width: 260px;
+            }
+
             .features {
                 grid-template-columns: 1fr;
             }
 
+            .how-section {
+                padding: 56px 0 40px;
+            }
+
             .features-section {
-                padding: 48px 0;
+                padding: 40px 0 56px;
             }
 
             .beta-section {
-                padding: 48px 0;
+                padding: 56px 0;
             }
 
             .beta-step {
@@ -862,15 +1450,15 @@
             }
 
             .privacy-section {
-                padding: 48px 0;
+                padding: 56px 0;
             }
 
-            .btn-outline {
-                padding: 14px 20px;
+            .deeper-magic {
+                padding: 22px;
             }
 
             .trust-items {
-                gap: 16px;
+                gap: 14px;
             }
 
             .trust-item {
@@ -906,9 +1494,11 @@
                 Focus Pocus
             </a>
             <ul class="nav-links">
+                <li><a href="#how">How It Works</a></li>
                 <li><a href="#features">Features</a></li>
-                <li><a href="#beta">Beta</a></li>
+                <li><a href="#game">Mini Game</a></li>
                 <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#beta" class="nav-cta">Join the Beta</a></li>
             </ul>
             <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -919,9 +1509,11 @@
             </button>
         </div>
         <div class="mobile-menu" id="mobileMenu">
+            <a href="#how">How It Works</a>
             <a href="#features">Features</a>
-            <a href="#beta">Join Beta</a>
+            <a href="#game">Mini Game</a>
             <a href="#privacy">Privacy</a>
+            <a href="#beta">Join the Beta</a>
         </div>
     </nav>
 
@@ -929,20 +1521,71 @@
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
-        <div class="container hero-content">
-            <div class="badge">Now in Closed Beta</div>
-            <h1>Focus Pocus</h1>
-            <p class="subtitle">Magic for your attention span.</p>
-            <p class="hero-desc">The free, privacy-first app blocker for Android. No ads, no subscriptions, no data collection.</p>
-            <div class="hero-actions">
-                <a href="#beta" class="btn">Join the Closed Beta</a>
-                <a href="#features" class="btn-ghost">
-                    See features
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 12l4-4-4-4"/>
-                    </svg>
-                </a>
+        <span class="sparkle" style="top: 18%; left: 8%;" aria-hidden="true">✦</span>
+        <span class="sparkle" style="top: 30%; left: 46%; animation-delay: 1.2s;" aria-hidden="true">✦</span>
+        <span class="sparkle" style="top: 70%; left: 15%; animation-delay: 2.1s;" aria-hidden="true">✦</span>
+        <span class="sparkle" style="top: 15%; right: 12%; animation-delay: 0.6s;" aria-hidden="true">✦</span>
+        <span class="sparkle" style="top: 62%; right: 6%; animation-delay: 2.8s;" aria-hidden="true">✦</span>
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="badge">Now in Closed Beta</div>
+                <h1>Cast a spell on your <span class="magic-word">distractions</span></h1>
+                <p class="subtitle">Focus Pocus — magic for your attention span.</p>
+                <p class="hero-desc">The free, privacy-first app blocker for Android. Banish distracting apps with a tap of an NFC talisman, a QR scan, or a scheduled ritual. No ads, no subscriptions, no data collection.</p>
+                <div class="hero-actions">
+                    <a href="#beta" class="btn">Join the Closed Beta</a>
+                    <a href="#features" class="btn-ghost">
+                        Explore the Spellbook
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 12l4-4-4-4"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="phone-wrap" aria-hidden="true">
+                <div class="phone">
+                    <div class="phone-notch"></div>
+                    <div class="phone-status">
+                        <span class="phone-status-chip">🔮 Ready to Cast</span>
+                        <span class="phone-streak">🔥 6 day streak</span>
+                    </div>
+                    <div class="phone-card">
+                        <div class="phone-card-title">Session Setup</div>
+                        <div class="phone-chips">
+                            <span class="phone-chip selected">25 min</span>
+                            <span class="phone-chip">45 min</span>
+                            <span class="phone-chip">1 hour</span>
+                            <span class="phone-chip">∞</span>
+                        </div>
+                        <div class="phone-row">
+                            <span class="phone-row-label">Allow Breaks</span>
+                            <span class="phone-toggle"></span>
+                        </div>
+                    </div>
+                    <div class="phone-card">
+                        <div class="phone-card-title">Select Enchantment</div>
+                        <div class="phone-ench selected">
+                            <span class="phone-ench-icon">🚫</span>
+                            <span>
+                                <span class="phone-ench-name">Doomscroll Banish</span><br>
+                                <span class="phone-ench-mode">Banish · 7 apps · 3 sites</span>
+                            </span>
+                        </div>
+                        <div class="phone-ench">
+                            <span class="phone-ench-icon">🛡️</span>
+                            <span>
+                                <span class="phone-ench-name">Deep Work Shield</span><br>
+                                <span class="phone-ench-mode">Shield · Only work apps allowed</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="phone-cast">✨ Cast</div>
+                    <div class="phone-nav">
+                        <span class="phone-nav-item active"><span class="phone-nav-icon">🔮</span>Focus</span>
+                        <span class="phone-nav-item"><span class="phone-nav-icon">📖</span>Spellbook</span>
+                        <span class="phone-nav-item"><span class="phone-nav-icon">📊</span>Insights</span>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -967,68 +1610,154 @@
                 Open Source
             </div>
             <div class="trust-item">
-                <span class="trust-icon" aria-hidden="true">🔔</span>
-                Notification Silencing
+                <span class="trust-icon" aria-hidden="true">📴</span>
+                Works Offline
             </div>
         </div>
     </div>
 
     <main>
-        <section class="features-section" id="features">
+        <!-- How It Works -->
+        <section class="how-section" id="how">
             <div class="container">
                 <div class="section-header reveal">
-                    <h2>Everything you need to stay focused</h2>
-                    <p>Block apps and websites, earn rewards, track your progress — all for free.</p>
+                    <span class="eyebrow">The Ritual</span>
+                    <h2>How the magic works</h2>
+                    <p>Three steps between you and a distraction-free session.</p>
                 </div>
-                <div class="features stagger">
-                    <div class="feature-card reveal">
-                        <div class="feature-icon-wrap purple" aria-hidden="true">🔓</div>
-                        <h3>Bring Your Own Tag</h3>
-                        <p>Don't pay $50 for a "special" brick. Works with any generic NFC tag, sticker, or card you already own.</p>
+                <div class="how-steps stagger">
+                    <div class="how-step reveal">
+                        <div class="how-step-num">01</div>
+                        <h3>Enchant</h3>
+                        <p>Create an Enchantment — a blocklist of apps and websites. Choose <strong>Banish</strong> mode to block specific apps, or <strong>Shield</strong> mode to allow only the ones you need.</p>
                     </div>
-                    <div class="feature-card reveal">
-                        <div class="feature-icon-wrap rose" aria-hidden="true">🚫</div>
-                        <h3>Enchantments</h3>
-                        <p>Create custom blocklists with Blacklist or Whitelist mode. Block apps via NFC tap, QR code, or manual toggle with optional Talisman Lock.</p>
+                    <div class="how-step reveal">
+                        <div class="how-step-num">02</div>
+                        <h3>Cast</h3>
+                        <p>Start your focus spell with a tap of an NFC talisman, a QR code scan, a Quick Spell preset, or a scheduled Ritual. Set a duration, allow breaks — then cast.</p>
                     </div>
-                    <div class="feature-card reveal">
-                        <div class="feature-icon-wrap indigo" aria-hidden="true">🪄</div>
-                        <h3>Quick Spells</h3>
-                        <p>Save your favorite focus configurations as presets for one-tap activation. Bind them to NFC tags or QR codes for instant casting.</p>
-                    </div>
-                    <div class="feature-card reveal">
-                        <div class="feature-icon-wrap blue" aria-hidden="true">📅</div>
-                        <h3>Scheduled Rituals</h3>
-                        <p>Set recurring schedules that auto-activate blocking with configurable breaks. Supports overnight spans for distraction-free mornings.</p>
-                    </div>
-                    <div class="feature-card reveal">
-                        <div class="feature-icon-wrap cyan" aria-hidden="true">🌐</div>
-                        <h3>Website Blocking</h3>
-                        <p>Block distracting websites across 16+ browsers including Chrome, Firefox, Edge, Brave, and more during focus sessions.</p>
-                    </div>
-                    <div class="feature-card reveal">
-                        <div class="feature-icon-wrap orange" aria-hidden="true">⏱️</div>
-                        <h3>App Time Limits</h3>
-                        <p>Set daily usage quotas per app. Limits are enforced even outside focus sessions to keep scrolling in check.</p>
-                    </div>
-                    <div class="feature-card reveal">
-                        <div class="feature-icon-wrap amber" aria-hidden="true">🏆</div>
-                        <h3>Conditional Unlocks</h3>
-                        <p>Reward yourself by unlocking blocked apps after spending time in a productive app. Build healthy habits with positive reinforcement.</p>
-                    </div>
-                    <div class="feature-card reveal">
-                        <div class="feature-icon-wrap green" aria-hidden="true">📊</div>
-                        <h3>Insights &amp; Streaks</h3>
-                        <p>Track focus sessions, daily streaks, and per-app usage over time — all stored privately on your device.</p>
+                    <div class="how-step reveal">
+                        <div class="how-step-num">03</div>
+                        <h3>Dispel</h3>
+                        <p>When the session ends, the spell lifts on its own. With Talisman Lock enabled, only a tap of your talisman can dispel it early — no willpower required.</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Features -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="eyebrow">The Spellbook</span>
+                    <h2>Everything you need to stay focused</h2>
+                    <p>Every feature in the app, free forever. No premium tier, no locked spells.</p>
+                </div>
+                <div class="features stagger">
+                    <div class="feature-card reveal">
+                        <div class="feature-icon-wrap violet" aria-hidden="true">🚫</div>
+                        <h3>Enchantments</h3>
+                        <p>Custom blocklists with Banish (blacklist) or Shield (whitelist) mode. Auto-banish newly installed apps so nothing slips through.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon-wrap violet" aria-hidden="true">🪄</div>
+                        <h3>Quick Spells</h3>
+                        <p>Save favorite focus setups as one-tap presets like "Deep Work" or "Sleep Mode". Bind them to NFC tags, QR codes, or deep links.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon-wrap gold" aria-hidden="true">🏷️</div>
+                        <h3>Bring Your Own Talisman</h3>
+                        <p>Don't pay $50 for a "special" brick. Any generic NFC tag, sticker, or card becomes a talisman — tap to cast, tap to dispel.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon-wrap violet" aria-hidden="true">📅</div>
+                        <h3>Scheduled Rituals</h3>
+                        <p>Recurring schedules that cast automatically — work hours, study time, bedtime. Overnight spans supported, and rituals survive reboots.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon-wrap" aria-hidden="true">🌐</div>
+                        <h3>Website Blocking</h3>
+                        <p>Block distracting websites across 16+ browsers including Chrome, Firefox, Edge, Brave, and DuckDuckGo during focus sessions.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon-wrap" aria-hidden="true">⏱️</div>
+                        <h3>App Time Limits</h3>
+                        <p>Daily usage quotas per app — say, 30 minutes of social media. Enforced even outside focus sessions to keep scrolling in check.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon-wrap gold" aria-hidden="true">🏆</div>
+                        <h3>Conditional Unlocks</h3>
+                        <p>Earn time in blocked apps by first spending time in productive ones. Positive reinforcement, built right into the blocking.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon-wrap" aria-hidden="true">📊</div>
+                        <h3>Insights &amp; Streaks</h3>
+                        <p>Focus streaks, screen time, session history, most-blocked apps, and a 7-day focus trend — all stored privately on your device.</p>
+                    </div>
+                </div>
+
+                <div class="deeper-magic reveal">
+                    <h3>✦ Deeper magic, for when you need it</h3>
+                    <ul class="deeper-list">
+                        <li><span><strong>Talisman Lock</strong> — require an NFC tap or QR scan to end a session early, so quitting takes more than a swipe.</span></li>
+                        <li><span><strong>Configurable breaks</strong> — allow a set number of timed breaks per session, with early-end when you're ready to resume.</span></li>
+                        <li><span><strong>Emergency Stop</strong> — one escape hatch for true emergencies, on a weeks-long cooldown so it can't become a habit.</span></li>
+                        <li><span><strong>Notification silencing</strong> — mute notifications and enable Do Not Disturb while focusing, restored during breaks.</span></li>
+                        <li><span><strong>Gentle redirection</strong> — open a blocked app and you're calmly guided back to your task, not shamed.</span></li>
+                        <li><span><strong>Survives reboots</strong> — active sessions and scheduled rituals pick right back up after a device restart.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mini Game -->
+        <section class="game-section" id="game">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="eyebrow">Training Grounds</span>
+                    <h2>Banish Blitz</h2>
+                    <p>Distracting apps are escaping their enchantment! Tap them to banish them back — but never banish a focus app.</p>
+                </div>
+                <div class="game-wrap reveal">
+                    <div class="game-hud">
+                        <div class="game-stat">
+                            <span class="game-stat-label">Score</span>
+                            <span class="game-stat-value" id="gameScore">0</span>
+                        </div>
+                        <div class="game-stat">
+                            <span class="game-stat-label">Time</span>
+                            <span class="game-stat-value" id="gameTime">30</span>
+                        </div>
+                        <div class="game-stat">
+                            <span class="game-stat-label">Streak</span>
+                            <span class="game-stat-value" id="gameStreak">0</span>
+                        </div>
+                        <div class="game-stat">
+                            <span class="game-stat-label">Best</span>
+                            <span class="game-stat-value gold" id="gameBest">0</span>
+                        </div>
+                    </div>
+                    <div class="game-board" id="gameBoard">
+                        <div class="game-overlay" id="gameOverlay">
+                            <p class="game-overlay-title" id="gameOverlayTitle">Ready to Cast?</p>
+                            <p class="game-overlay-text" id="gameOverlayText">You have 30 seconds. Banish every distraction that pops out of an orb. Shield the focus apps — banishing them costs you points.</p>
+                            <div class="game-overlay-score hidden" id="gameOverlayScore"></div>
+                            <button class="game-btn" id="gameStartBtn" type="button">✨ Cast to Begin</button>
+                        </div>
+                    </div>
+                    <p class="game-legend">Banish <strong>📱 💬 🎮 📺 🛒 🎵</strong> &nbsp;·&nbsp; Shield <strong>📚 🧘 ✏️</strong> (don't tap!)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Beta -->
         <section class="beta-section" id="beta">
             <div class="container">
-                <h2 class="reveal">Join the Closed Beta</h2>
-                <p class="beta-desc reveal">Get early access to Focus Pocus and help shape the app before public launch.</p>
+                <div class="section-header reveal">
+                    <span class="eyebrow">Early Access</span>
+                    <h2>Join the Closed Beta</h2>
+                    <p>Get early access to Focus Pocus and help shape the app before public launch.</p>
+                </div>
                 <div class="beta-steps stagger">
                     <div class="beta-step reveal">
                         <span class="step-number" aria-hidden="true">1</span>
@@ -1057,13 +1786,15 @@
         </section>
 
         <div class="container developer reveal">
-            <h2>Developed by Infinicada</h2>
+            <h2 class="serif">Developed by Infinicada</h2>
             <p>Building tools to help you reclaim your time.</p>
         </div>
 
+        <!-- Privacy -->
         <section class="privacy-section" id="privacy">
             <div class="container">
                 <div class="reveal">
+                    <span class="eyebrow">No Dark Arts</span>
                     <h2>Privacy</h2>
                     <p><strong>Effective Date:</strong> January 30, 2026</p>
 
@@ -1075,7 +1806,7 @@
                             <li><strong>No Advertising ID:</strong> The advertising identifier is explicitly removed — there is no cross-app tracking or ad targeting.</li>
                             <li><strong>No Accounts:</strong> You do not need to create an account to use Focus Pocus.</li>
                             <li><strong>Permissions Stay Local:</strong> The app requires several Android permissions to power its features — all data stays on your device and is never uploaded.</li>
-                            <li><strong>Optional Anonymous Analytics:</strong> With your consent, the app sends anonymous crash reports and basic usage statistics to help fix bugs. No personal data is included. You can turn this off anytime in Settings.</li>
+                            <li><strong>Anonymous Analytics (Optional):</strong> The app sends anonymous crash reports and basic usage statistics to help fix bugs — no personal data is ever included. Sharing is on by default, and you can turn it off during onboarding or anytime in Settings.</li>
                         </ul>
                         <p>I do not sell or share your data with third parties. <a href="privacy.html">Full privacy policy →</a></p>
                     </div>
@@ -1136,6 +1867,160 @@
         }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
         revealElements.forEach(el => observer.observe(el));
+
+        // ── Banish Blitz mini game ──
+        (() => {
+            const DISTRACTIONS = ['📱', '💬', '🎮', '📺', '🛒', '🎵'];
+            const FOCUS_APPS = ['📚', '🧘', '✏️'];
+            const GAME_SECONDS = 30;
+            const CELL_COUNT = 9;
+            const BEST_KEY = 'fp-banish-best';
+
+            const board = document.getElementById('gameBoard');
+            const overlay = document.getElementById('gameOverlay');
+            const overlayTitle = document.getElementById('gameOverlayTitle');
+            const overlayText = document.getElementById('gameOverlayText');
+            const overlayScore = document.getElementById('gameOverlayScore');
+            const startBtn = document.getElementById('gameStartBtn');
+            const scoreEl = document.getElementById('gameScore');
+            const timeEl = document.getElementById('gameTime');
+            const streakEl = document.getElementById('gameStreak');
+            const bestEl = document.getElementById('gameBest');
+
+            let playing = false;
+            let score = 0;
+            let streak = 0;
+            let timeLeft = GAME_SECONDS;
+            let startTime = 0;
+            let countdownId = null;
+            let spawnId = null;
+            const hideTimers = new Map();
+
+            let best = 0;
+            try { best = parseInt(localStorage.getItem(BEST_KEY), 10) || 0; } catch (e) { /* private mode */ }
+            bestEl.textContent = best;
+
+            // Build the 3x3 orb grid (before the overlay so it stays on top)
+            const cells = [];
+            for (let i = 0; i < CELL_COUNT; i++) {
+                const cell = document.createElement('button');
+                cell.type = 'button';
+                cell.className = 'game-cell';
+                cell.setAttribute('aria-label', 'Crystal orb ' + (i + 1));
+                const emoji = document.createElement('span');
+                emoji.className = 'game-emoji';
+                emoji.setAttribute('aria-hidden', 'true');
+                cell.appendChild(emoji);
+                cell.addEventListener('click', () => onCellTap(cell));
+                board.insertBefore(cell, overlay);
+                cells.push(cell);
+            }
+
+            const elapsed = () => (Date.now() - startTime) / 1000;
+
+            function showPop(cell, text, bad) {
+                const pop = document.createElement('span');
+                pop.className = 'game-pop' + (bad ? ' bad' : '');
+                pop.textContent = text;
+                cell.appendChild(pop);
+                setTimeout(() => pop.remove(), 650);
+            }
+
+            function hideEmoji(cell) {
+                cell.classList.remove('up');
+                delete cell.dataset.kind;
+                const t = hideTimers.get(cell);
+                if (t) { clearTimeout(t); hideTimers.delete(cell); }
+            }
+
+            function spawn() {
+                if (!playing) return;
+                const empty = cells.filter(c => !c.classList.contains('up'));
+                if (empty.length) {
+                    const cell = empty[Math.floor(Math.random() * empty.length)];
+                    const isFocus = Math.random() < 0.25;
+                    const pool = isFocus ? FOCUS_APPS : DISTRACTIONS;
+                    cell.querySelector('.game-emoji').textContent = pool[Math.floor(Math.random() * pool.length)];
+                    cell.dataset.kind = isFocus ? 'focus' : 'distraction';
+                    cell.classList.add('up');
+                    const lifetime = Math.max(650, 1150 - elapsed() * 15);
+                    hideTimers.set(cell, setTimeout(() => hideEmoji(cell), lifetime));
+                }
+                const interval = Math.max(420, 880 - elapsed() * 15);
+                spawnId = setTimeout(spawn, interval);
+            }
+
+            function onCellTap(cell) {
+                if (!playing || !cell.classList.contains('up')) return;
+                const kind = cell.dataset.kind;
+                hideEmoji(cell);
+                if (kind === 'distraction') {
+                    streak++;
+                    let gain = 10;
+                    if (streak > 0 && streak % 5 === 0) gain += 25;
+                    score += gain;
+                    showPop(cell, '+' + gain + (gain > 10 ? ' ✨' : ''), false);
+                    cell.classList.add('hit');
+                    setTimeout(() => cell.classList.remove('hit'), 250);
+                } else {
+                    score = Math.max(0, score - 15);
+                    streak = 0;
+                    showPop(cell, '-15', true);
+                    cell.classList.add('oops');
+                    setTimeout(() => cell.classList.remove('oops'), 400);
+                }
+                scoreEl.textContent = score;
+                streakEl.textContent = streak;
+            }
+
+            function rankFor(s) {
+                if (s < 80) return '😴 Sleepy Apprentice';
+                if (s < 160) return '🧙 Hedge Wizard';
+                if (s < 240) return '✨ Adept Spellcaster';
+                return '🔮 Archmage of Focus';
+            }
+
+            function start() {
+                playing = true;
+                score = 0;
+                streak = 0;
+                timeLeft = GAME_SECONDS;
+                startTime = Date.now();
+                scoreEl.textContent = '0';
+                streakEl.textContent = '0';
+                timeEl.textContent = timeLeft;
+                overlay.classList.add('hidden');
+                countdownId = setInterval(() => {
+                    timeLeft--;
+                    timeEl.textContent = timeLeft;
+                    if (timeLeft <= 0) end();
+                }, 1000);
+                spawn();
+            }
+
+            function end() {
+                playing = false;
+                clearInterval(countdownId);
+                clearTimeout(spawnId);
+                cells.forEach(hideEmoji);
+                const isBest = score > best;
+                if (isBest) {
+                    best = score;
+                    bestEl.textContent = best;
+                    try { localStorage.setItem(BEST_KEY, String(best)); } catch (e) { /* private mode */ }
+                }
+                overlayTitle.textContent = rankFor(score);
+                overlayText.textContent = isBest && score > 0
+                    ? 'A new personal best! The distractions tremble before you.'
+                    : 'Session complete. The spell has lifted.';
+                overlayScore.textContent = score;
+                overlayScore.classList.remove('hidden');
+                startBtn.textContent = '✨ Cast Again';
+                overlay.classList.remove('hidden');
+            }
+
+            startBtn.addEventListener('click', start);
+        })();
     </script>
 
 </body>

@@ -14,21 +14,34 @@
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+
     <style>
+        /*
+         * Palette mirrors the app's Material 3 dark theme
+         * (ui/theme/Color.kt in the FocusPocus repo).
+         */
         :root {
-            --primary: #4f46e5;
-            --dark: #1f2937;
-            --light: #f3f4f6;
-            --white: #ffffff;
+            --bg: #14111F;
+            --surface-low: #1C1828;
+            --surface-high: #2B2638;
+            --text: #E7E1F0;
+            --text-muted: #CBC4DB;
+            --primary: #CDBCF5;
+            --on-primary-container: #E8DEFF;
+            --outline: #49445A;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--light);
+            color: var(--text-muted);
+            background-color: var(--bg);
         }
 
         /* Accessibility: visible focus styles */
@@ -42,22 +55,38 @@
             max-width: 800px;
             margin: 40px auto;
             padding: 40px;
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            background: var(--surface-low);
+            border: 1px solid var(--surface-high);
+            border-radius: 20px;
         }
 
         h1 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 600;
             color: var(--primary);
-            border-bottom: 2px solid #e5e7eb;
+            border-bottom: 1px solid var(--outline);
             padding-bottom: 15px;
             margin-top: 0;
         }
 
         h2 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 600;
             margin-top: 30px;
-            font-size: 1.1rem;
-            color: #111827;
+            font-size: 1.15rem;
+            color: var(--text);
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        a {
+            color: var(--primary);
+        }
+
+        a:hover {
+            color: var(--on-primary-container);
         }
 
         ul {
@@ -81,10 +110,10 @@
         }
 
         .contact-box {
-            background: #f9fafb;
+            background: var(--bg);
             padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            border: 1px solid var(--outline);
             margin-top: 20px;
         }
 
@@ -103,27 +132,27 @@
         <a href="index.html" class="back-link">← Back to Focus Pocus</a>
 
         <h1>Privacy Policy</h1>
-        <p><strong>Last Updated:</strong> March 7, 2026</p>
+        <p><strong>Last Updated:</strong> July 6, 2026</p>
 
         <p>This Privacy Policy describes how Infinicada ("I", "me", or "my") handles information when you use the Focus Pocus mobile application (the "App").</p>
 
-        <p><strong>The Short Version:</strong> I do not collect personal data. All your blocking configurations, usage stats, and app activity stay on your device. With your consent, the App sends anonymous crash reports and basic usage statistics to help fix bugs and improve the App — no personal information is included, and you can opt out at any time.</p>
+        <p><strong>The Short Version:</strong> I do not collect personal data. All your blocking configurations, usage stats, and app activity stay on your device. The App sends anonymous crash reports and basic usage statistics to help fix bugs and improve the App — this sharing is enabled by default, no personal information is ever included, and you can turn it off during onboarding or at any time in Settings.</p>
 
         <h2>1. Data Collection and Use</h2>
         <ul>
             <li><strong>No Personal Information:</strong> The App does not require you to create an account, log in, or provide your name, email address, or phone number.</li>
             <li><strong>No Advertising ID:</strong> The advertising identifier (AD_ID) is explicitly removed from the App. There is no cross-app tracking or ad targeting of any kind.</li>
-            <li><strong>Local App Data:</strong> All configuration settings, blocked app lists, focus session history, and usage statistics are stored locally on your device and are never transmitted to external servers.</li>
-            <li><strong>Optional Anonymous Analytics (see Section 2):</strong> With your explicit consent, the App collects anonymous crash reports and basic usage statistics via Firebase (Google). No personal data is included in these reports. You choose during onboarding and can change your preference anytime in Settings.</li>
+            <li><strong>Local App Data:</strong> All configuration settings, blocked app lists, focus session history, and usage statistics are stored locally on your device and are never transmitted to external servers. This data is also excluded from Android cloud backups and device-to-device transfers, so it never leaves your device even through system backup.</li>
+            <li><strong>Anonymous Analytics (see Section 2):</strong> The App collects anonymous crash reports and basic usage statistics via Firebase (Google). No personal data is included in these reports. This sharing is enabled by default; the setting is shown to you during onboarding, and you can turn it off at any time in Settings.</li>
         </ul>
 
         <h2>2. Firebase Analytics and Crashlytics</h2>
-        <p>Focus Pocus uses two Firebase services provided by Google, both of which are <strong>off by default</strong> and only activated with your consent:</p>
+        <p>Focus Pocus uses two Firebase services provided by Google. Anonymous sharing is <strong>enabled by default</strong>, and you can turn it off at any time:</p>
         <ul>
             <li><strong>Firebase Crashlytics (Crash Reporting):</strong> When enabled, automatically sends anonymous crash reports if the App crashes unexpectedly. Reports include the stack trace, device model, Android OS version, and App version. No user identifiers, account information, or personal data are attached to crash reports.</li>
             <li><strong>Firebase Analytics (Usage Statistics):</strong> When enabled, automatically collects anonymous usage statistics such as session length and general app activity. The advertising identifier (AD_ID) is explicitly excluded. No personal data, account information, or details about which apps you block are ever transmitted.</li>
         </ul>
-        <p>You are asked for consent during the initial onboarding flow. You can enable or disable both services at any time in <strong>Settings → Privacy → Share Analytics</strong>. Disabling the toggle immediately stops all data collection and transmission.</p>
+        <p>The <strong>Share Analytics</strong> setting is presented during the initial onboarding flow, where you can switch it off before finishing setup. Users who installed the App before this setting existed are shown a one-time dialog to make the same choice. You can enable or disable both services at any time in <strong>Settings → Privacy → Share Analytics</strong>. Disabling the toggle immediately stops all data collection and transmission.</p>
         <p>Data collected by these Firebase services is processed by Google in accordance with <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.</p>
 
         <h2>3. Android Permissions</h2>
@@ -141,7 +170,7 @@
         </ul>
 
         <h2>4. Data Retention</h2>
-        <p>All local settings and configurations are stored on your device and are immediately deleted when you uninstall the App. Anonymous crash and analytics data sent to Firebase is retained and processed by Google in accordance with their data retention policies. Because no personal identifiers are attached to this data, it cannot be linked back to you.</p>
+        <p>All local settings and configurations are stored on your device and are immediately deleted when you uninstall the App. Because App data is excluded from Android's cloud backup and device-transfer systems, no copy persists after uninstall. Anonymous crash and analytics data sent to Firebase is retained and processed by Google in accordance with their data retention policies. Because no personal identifiers are attached to this data, it cannot be linked back to you.</p>
 
         <h2>5. Advertising</h2>
         <p>Focus Pocus is free and does not display third-party advertisements. The advertising identifier (AD_ID) is explicitly removed and no ad-targeting data is collected.</p>
