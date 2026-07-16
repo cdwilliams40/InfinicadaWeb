@@ -422,6 +422,7 @@
         }
 
         .phone {
+            position: relative;
             width: 290px;
             background: var(--surface-lowest);
             border: 3px solid var(--surface-highest);
@@ -431,6 +432,77 @@
                 0 24px 60px rgba(0, 0, 0, 0.55),
                 0 0 80px rgba(101, 80, 164, 0.25);
             font-size: 0.72rem;
+        }
+
+        /* ── Live session notification (heads-up demo) ── */
+        .phone-notif {
+            position: absolute;
+            top: 32px;
+            left: 10px;
+            right: 10px;
+            z-index: 5;
+            text-align: left;
+            background: var(--surface-high);
+            border: 1px solid var(--surface-highest);
+            border-radius: 14px;
+            padding: 10px 12px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+            opacity: 0;
+            transform: translateY(-14px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            pointer-events: none;
+        }
+
+        .phone-notif.shown {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .phone-notif-header {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.56rem;
+            font-weight: 600;
+            color: var(--text-faint);
+            margin-bottom: 5px;
+        }
+
+        .phone-notif-app {
+            color: var(--text-muted);
+        }
+
+        .phone-notif-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .phone-notif-text {
+            font-size: 0.64rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .phone-notif-countdown {
+            color: var(--primary);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .phone-notif-bar {
+            height: 3px;
+            background: var(--surface-lowest);
+            border-radius: 99px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .phone-notif-fill {
+            height: 100%;
+            width: 100%;
+            background: var(--primary);
+            border-radius: 99px;
         }
 
         .phone-notch {
@@ -587,11 +659,27 @@
             text-align: center;
             font-weight: 800;
             padding: 11px;
+            border: 1px solid transparent;
             border-radius: 99px;
             margin: 12px 0;
             font-size: 0.82rem;
             letter-spacing: 0.02em;
             box-shadow: 0 4px 16px rgba(205, 188, 245, 0.3);
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.15s ease, background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+
+        .phone-cast.pressed {
+            transform: scale(0.95);
+        }
+
+        .phone-cast.dispel {
+            background: var(--surface-high);
+            color: var(--gold);
+            border-color: var(--gold-container);
+            box-shadow: none;
+            font-weight: 700;
         }
 
         .phone-nav {
@@ -1526,8 +1614,18 @@
             <div class="phone-wrap" aria-hidden="true">
                 <div class="phone">
                     <div class="phone-notch"></div>
+                    <div class="phone-notif" id="phoneNotif">
+                        <div class="phone-notif-header">
+                            <span>🔮</span>
+                            <span class="phone-notif-app">Focus Pocus</span>
+                            <span id="phoneNotifWhen">· ongoing</span>
+                        </div>
+                        <div class="phone-notif-title" id="phoneNotifTitle">Doomscroll Banish — spell active</div>
+                        <div class="phone-notif-text"><span class="phone-notif-countdown" id="phoneNotifCountdown">25:00</span><span id="phoneNotifSuffix"> until the spell lifts</span></div>
+                        <div class="phone-notif-bar" id="phoneNotifBar"><div class="phone-notif-fill" id="phoneNotifFill"></div></div>
+                    </div>
                     <div class="phone-status">
-                        <span class="phone-status-chip">🔮 Ready to Cast</span>
+                        <span class="phone-status-chip" id="phoneStatusChip">🔮 Ready to Cast</span>
                         <span class="phone-streak">🔥 6 day streak</span>
                     </div>
                     <div class="phone-card">
@@ -1560,7 +1658,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="phone-cast">✨ Cast</div>
+                    <div class="phone-cast" id="phoneCastBtn">✨ Cast</div>
                     <div class="phone-nav">
                         <span class="phone-nav-item"><span class="phone-nav-icon">🤝</span>Pacts</span>
                         <span class="phone-nav-item active"><span class="phone-nav-icon">🔮</span>Focus</span>
@@ -1689,6 +1787,7 @@
                         <li><span><strong>Talisman Lock</strong> — require an NFC tap to end a session early, so quitting takes more than a swipe.</span></li>
                         <li><span><strong>Configurable breaks</strong> — allow a set number of timed breaks per session, with early-end when you're ready to resume.</span></li>
                         <li><span><strong>Emergency Stop</strong> — one escape hatch for true emergencies, on a weeks-long cooldown so it can't become a habit.</span></li>
+                        <li><span><strong>Live session notification</strong> — while a spell is active, an ongoing notification names the enchantment and counts down the time until it lifts.</span></li>
                         <li><span><strong>Notification silencing</strong> — mute notifications and enable Do Not Disturb while focusing, restored during breaks.</span></li>
                         <li><span><strong>Gentle redirection</strong> — open a blocked app and you're calmly guided back to your task, not shamed.</span></li>
                         <li><span><strong>Survives reboots</strong> — active sessions and scheduled rituals pick right back up after a device restart.</span></li>
@@ -1871,6 +1970,140 @@ com.infinicada.focuspocus
                 hamburgerBtn.setAttribute('aria-expanded', 'false');
             });
         });
+
+        // ── Hero phone: live session notification demo ──
+        (function () {
+            const notif = document.getElementById('phoneNotif');
+            const notifTitle = document.getElementById('phoneNotifTitle');
+            const notifWhen = document.getElementById('phoneNotifWhen');
+            const countdown = document.getElementById('phoneNotifCountdown');
+            const suffix = document.getElementById('phoneNotifSuffix');
+            const bar = document.getElementById('phoneNotifBar');
+            const fill = document.getElementById('phoneNotifFill');
+            const chip = document.getElementById('phoneStatusChip');
+            const castBtn = document.getElementById('phoneCastBtn');
+            if (!notif || !castBtn) return;
+
+            const SESSION_SECONDS = 25 * 60;   // matches the "25 min" chip in Session Setup
+            const READY_MS = 3200;             // pause on the ready screen before auto-casting
+            const LIVE_TICK_MS = 9000;         // countdown ticks in real time for this long
+            const FF_MS = 2200;                // then time-lapses to the end of the session
+            const COMPLETE_MS = 3400;          // how long the "spell complete" notification lingers
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+            let phase = 'ready';
+            let remaining = SESSION_SECONDS;
+            let timeouts = [];
+            let ticker = null;
+            let raf = null;
+
+            const wait = (fn, ms) => timeouts.push(setTimeout(fn, ms));
+
+            function clearTimers() {
+                timeouts.forEach(clearTimeout);
+                timeouts = [];
+                if (ticker) { clearInterval(ticker); ticker = null; }
+                if (raf) { cancelAnimationFrame(raf); raf = null; }
+            }
+
+            const fmt = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+
+            function render(seconds) {
+                remaining = Math.max(0, seconds);
+                countdown.textContent = fmt(remaining);
+                fill.style.width = (remaining / SESSION_SECONDS * 100) + '%';
+            }
+
+            function ready() {
+                phase = 'ready';
+                clearTimers();
+                notif.classList.remove('shown');
+                chip.textContent = '🔮 Ready to Cast';
+                castBtn.textContent = '✨ Cast';
+                castBtn.classList.remove('dispel');
+                wait(pressCast, READY_MS);
+            }
+
+            function pressCast() {
+                castBtn.classList.add('pressed');
+                wait(() => { castBtn.classList.remove('pressed'); castSpell(); }, 160);
+            }
+
+            function castSpell() {
+                phase = 'active';
+                clearTimers();
+                chip.textContent = '✨ Spell Active';
+                castBtn.textContent = '🏷️ Tap talisman to dispel';
+                castBtn.classList.add('dispel');
+                notifTitle.textContent = 'Doomscroll Banish — spell active';
+                notifWhen.textContent = '· ongoing';
+                countdown.style.display = '';
+                suffix.textContent = ' until the spell lifts';
+                bar.style.display = '';
+                render(SESSION_SECONDS);
+                notif.classList.add('shown');
+                ticker = setInterval(() => render(remaining - 1), 1000);
+                wait(fastForward, LIVE_TICK_MS);
+            }
+
+            function fastForward() {
+                if (ticker) { clearInterval(ticker); ticker = null; }
+                if (reduceMotion.matches) {
+                    render(0);
+                    finish(false);
+                    return;
+                }
+                const from = remaining;
+                let start = null;
+                const step = ts => {
+                    if (start === null) start = ts;
+                    const p = Math.min((ts - start) / FF_MS, 1);
+                    render(Math.round(from * (1 - p * p)));   // the clock accelerates, time-lapse style
+                    if (p < 1) {
+                        raf = requestAnimationFrame(step);
+                    } else {
+                        raf = null;
+                        finish(false);
+                    }
+                };
+                raf = requestAnimationFrame(step);
+            }
+
+            function finish(dispelledEarly) {
+                const left = remaining;
+                phase = 'complete';
+                clearTimers();
+                chip.textContent = '🔮 Ready to Cast';
+                castBtn.textContent = '✨ Cast';
+                castBtn.classList.remove('dispel');
+                notifWhen.textContent = '· now';
+                bar.style.display = 'none';
+                countdown.style.display = 'none';
+                if (dispelledEarly) {
+                    notifTitle.textContent = '🏷️ Talisman tapped — spell dispelled';
+                    suffix.textContent = fmt(left) + ' left on the clock. See you next session.';
+                } else {
+                    notifTitle.textContent = '✨ Spell complete';
+                    suffix.textContent = '25 min of focus banked · streak +1 🔥';
+                }
+                wait(() => {
+                    notif.classList.remove('shown');
+                    wait(ready, 450);
+                }, COMPLETE_MS);
+            }
+
+            // The mockup is clickable too: cast and dispel by hand.
+            castBtn.addEventListener('click', () => {
+                if (phase === 'active') {
+                    finish(true);
+                } else {
+                    clearTimers();
+                    pressCast();
+                }
+            });
+
+            ready();
+        })();
 
         // ── Scroll reveal with IntersectionObserver ──
         const revealElements = document.querySelectorAll('.reveal');
