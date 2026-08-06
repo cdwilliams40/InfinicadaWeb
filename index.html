@@ -1478,6 +1478,7 @@
                 <li><a href="#how">How It Works</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#warden">Warden Mode</a></li>
+                <li><a href="#coven">Coven Sync</a></li>
                 <li><a href="#privacy">Privacy</a></li>
                 <li><a href="#beta" class="nav-cta">Join the Beta</a></li>
             </ul>
@@ -1493,6 +1494,7 @@
             <a href="#how">How It Works</a>
             <a href="#features">Features</a>
             <a href="#warden">Warden Mode</a>
+            <a href="#coven">Coven Sync</a>
             <a href="#privacy">Privacy</a>
             <a href="#beta">Join the Beta</a>
         </div>
@@ -1677,6 +1679,11 @@
                         <p>Optional device-owner enforcement: blocked apps grey out and simply won't open, and the app can't be uninstalled in a weak moment. <a class="card-link" href="warden.html">How it works →</a></p>
                     </div>
                     <div class="feature-card reveal">
+                        <div class="feature-icon-wrap gold" aria-hidden="true">🕸️</div>
+                        <h3>Coven Sync</h3>
+                        <p>Bind your phone and your browser into a coven: cast once and every device focuses, dispel once and all are freed, panic-seal everywhere at once. <a class="card-link" href="#coven">How it works →</a></p>
+                    </div>
+                    <div class="feature-card reveal">
                         <div class="feature-icon-wrap" aria-hidden="true">📊</div>
                         <h3>Insights &amp; Streaks</h3>
                         <p>Focus streaks, session history, app opens with reflex-tap counts, most-blocked apps, and daily usage trends — all stored privately on your device.</p>
@@ -1767,6 +1774,42 @@ com.infinicada.focuspocus
         </section>
 
         <!-- Beta -->
+        <!-- Coven Sync -->
+        <section class="how-section" id="coven">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="eyebrow">Cast Once, Focus Everywhere</span>
+                    <h2>Join your devices in a coven</h2>
+                    <p>Your phone blocks apps. Your browser blocks websites. A coven makes them act as one.</p>
+                </div>
+                <div class="how-steps stagger">
+                    <div class="how-step reveal">
+                        <div class="how-step-num">01</div>
+                        <h3>Form</h3>
+                        <p>Form a coven on one device and it mints a <strong>coven code</strong>. No account, no email, no sign-up — the code is the only key, so keep it to yourself.</p>
+                    </div>
+                    <div class="how-step reveal">
+                        <div class="how-step-num">02</div>
+                        <h3>Bind</h3>
+                        <p>Enter the code on your other devices — the <a href="https://github.com/cdwilliams40/FocusPocus-Browser" target="_blank" rel="noopener noreferrer">Focus Pocus browser extension</a> for Chrome and Firefox, or another Android device. Up to ten devices share one coven.</p>
+                    </div>
+                    <div class="how-step reveal">
+                        <div class="how-step-num">03</div>
+                        <h3>Cast together</h3>
+                        <p>Cast a focus session anywhere and the rest follow with a linked session that ends at the same moment. Dispel the original and they're all freed — and <strong>Seal Everything Now</strong> seals every device at once.</p>
+                    </div>
+                </div>
+                <div class="deeper-magic reveal">
+                    <h3>✦ Pseudonymous by design</h3>
+                    <ul class="deeper-list">
+                        <li><span><strong>What syncs is small</strong> — a device name you choose, the running session's name and end time, panic presses, and today's counters. Never your app lists, site lists, or any history.</span></li>
+                        <li><span><strong>No accounts</strong> — a coven is identified only by its randomly minted code. The server has nothing to link it to you.</span></li>
+                        <li><span><strong>Nothing lingers</strong> — leave the coven and your device's data is deleted; a coven left quiet for 90 days deletes itself.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <section class="beta-section" id="beta">
             <div class="container">
                 <div class="section-header reveal">
@@ -1812,17 +1855,18 @@ com.infinicada.focuspocus
                 <div class="reveal">
                     <span class="eyebrow">No Dark Arts</span>
                     <h2>Privacy</h2>
-                    <p><strong>Effective Date:</strong> January 30, 2026</p>
+                    <p><strong>Effective Date:</strong> August 6, 2026</p>
 
                     <div class="privacy-box">
-                        <p><strong>Your data stays on your device — with one exception, stated plainly.</strong></p>
-                        <p>Focus Pocus is built with a privacy-first philosophy. Your app activity, blocking configurations, and usage stats are stored locally and never uploaded. The one thing the app does send is anonymous crash reports and basic usage statistics to help fix bugs — on by default, never including personal data, and switched off with a single toggle.</p>
+                        <p><strong>Your data stays on your device — with two exceptions, stated plainly.</strong></p>
+                        <p>Focus Pocus is built with a privacy-first philosophy. Your app activity, blocking configurations, and usage stats are stored locally and never uploaded. The app sends anonymous crash reports and basic usage statistics to help fix bugs — on by default, never including personal data, and switched off with a single toggle. And if you opt into Coven Sync, a small pseudonymous status envelope is shared between your own devices through my server.</p>
                         <ul>
                             <li><strong>No Personal Data:</strong> No name, email, account, or personal information is ever collected.</li>
                             <li><strong>No Advertising ID:</strong> The advertising identifier is explicitly removed — there is no cross-app tracking or ad targeting.</li>
                             <li><strong>No Accounts:</strong> You do not need to create an account to use Focus Pocus.</li>
                             <li><strong>Permissions Stay Local:</strong> The app requires several Android permissions to power its features — all data stays on your device and is never uploaded.</li>
                             <li><strong>Anonymous Analytics (Optional):</strong> The app sends anonymous crash reports and basic usage statistics to help fix bugs — no personal data is ever included. Sharing is on by default, and you can turn it off during onboarding or anytime in Settings.</li>
+                            <li><strong>Coven Sync (Optional):</strong> Off unless you form or join a coven. Your devices then share a small status envelope — chosen device name, running focus session, panic presses, today's counters — keyed by a random coven code, deleted when you leave or after 90 days idle. Never your blocklists or history.</li>
                         </ul>
                         <p>I do not sell or share your data with third parties. <a href="privacy.html">Full privacy policy →</a></p>
                     </div>

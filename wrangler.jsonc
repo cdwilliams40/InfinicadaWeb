@@ -4,8 +4,27 @@
 	// builds update it instead of creating a new Worker.
 	"name": "infinicadaweb",
 	"compatibility_date": "2026-07-01",
-	// Static-assets-only Worker: serve the site files from the repo root.
+	// worker.js serves the Focus Pocus Coven Sync API under /api/sync/v1/
+	// and falls through to the static site files for everything else.
+	"main": "worker.js",
 	"assets": {
-		"directory": "./"
-	}
+		"directory": "./",
+		"binding": "ASSETS"
+	},
+	// One Durable Object per coven. SQLite-backed classes deploy on the free
+	// plan and need no dashboard setup — the migration below provisions them.
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "SYNC_COVEN",
+				"class_name": "SyncCoven"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["SyncCoven"]
+		}
+	]
 }

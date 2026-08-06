@@ -132,11 +132,11 @@
         <a href="index.html" class="back-link">← Back to Focus Pocus</a>
 
         <h1>Privacy Policy</h1>
-        <p><strong>Last Updated:</strong> July 14, 2026</p>
+        <p><strong>Last Updated:</strong> August 6, 2026</p>
 
-        <p>This Privacy Policy describes how Infinicada ("I", "me", or "my") handles information when you use the Focus Pocus mobile application (the "App").</p>
+        <p>This Privacy Policy describes how Infinicada ("I", "me", or "my") handles information when you use the Focus Pocus mobile application (the "App") and the Focus Pocus browser extension (the "Extension").</p>
 
-        <p><strong>The Short Version:</strong> I do not collect personal data. All your blocking configurations, usage stats, and app activity stay on your device. The App sends anonymous crash reports and basic usage statistics to help fix bugs and improve the App — this sharing is enabled by default, no personal information is ever included, and you can turn it off during onboarding or at any time in Settings.</p>
+        <p><strong>The Short Version:</strong> I do not collect personal data. All your blocking configurations, usage stats, and app activity stay on your device. The App sends anonymous crash reports and basic usage statistics to help fix bugs and improve the App — this sharing is enabled by default, no personal information is ever included, and you can turn it off during onboarding or at any time in Settings. If you opt into Coven Sync to link your own devices, a small pseudonymous status envelope is shared between them through my server — described plainly in Section 3.</p>
 
         <h2>1. Data Collection and Use</h2>
         <ul>
@@ -155,7 +155,16 @@
         <p>The <strong>Share Analytics</strong> setting is presented during the initial onboarding flow, where you can switch it off before finishing setup. Users who installed the App before this setting existed are shown a one-time dialog to make the same choice. You can enable or disable both services at any time in <strong>Settings → Privacy → Share Analytics</strong>. Disabling the toggle immediately stops all data collection and transmission.</p>
         <p>Data collected by these Firebase services is processed by Google in accordance with <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.</p>
 
-        <h2>3. Android Permissions</h2>
+        <h2>3. Coven Sync (Optional Cross-Device Sync)</h2>
+        <p>Focus Pocus can optionally link your devices — the App and the <a href="https://github.com/cdwilliams40/FocusPocus-Browser" target="_blank" rel="noopener noreferrer">Extension</a> — into a "coven", so a focus session cast on one device is mirrored on the others and "Seal Everything Now" seals everywhere at once. <strong>Coven Sync is off by default</strong>: nothing is synced unless you explicitly form or join a coven under Settings → Coven Sync, and it stops the moment you leave.</p>
+        <ul>
+            <li><strong>What is synced:</strong> each device shares one small status envelope — the device name you choose, the platform (Android or browser), the app version, the running focus session's name, start/end time and break state, the time of a "Seal Everything Now" press, and today's totals (opens, reflex opens, pact minutes, seals, focus minutes). <strong>What is never synced:</strong> your blocklists, the names of apps or sites you block or visit, your session history, and anything that identifies you.</li>
+            <li><strong>No accounts:</strong> a coven is identified only by a random code minted when it is formed. The code is the sole credential — anyone who has it can join your coven, so treat it like a key. There is no way for me to look up a coven by name, email, or device, because none of those are ever attached to it.</li>
+            <li><strong>Where it lives:</strong> coven data is stored on my server infrastructure at infinicada.com, hosted on Cloudflare. Sync requests travel over HTTPS and, like any web request, carry your IP address in transit; the sync service does not store IP addresses with coven data.</li>
+            <li><strong>Retention &amp; deletion:</strong> leaving a coven deletes your device's envelope; when the last device leaves, the entire coven is deleted. A coven with no activity for 90 days is deleted automatically. Uninstalling without leaving simply lets that 90-day timer run out.</li>
+        </ul>
+
+        <h2>4. Android Permissions</h2>
         <p>To function as a productivity tool, Focus Pocus requires specific permissions from your Android device. These permissions are used strictly for functionality and <strong>never</strong> for data collection.</p>
 
         <ul>
@@ -169,19 +178,19 @@
             <li><strong>Device Owner / Device Admin (optional — Warden Mode):</strong> Only if you explicitly provision Focus Pocus as device owner via a manual, one-time adb command. The App uses this role for exactly two things: suspending blocked apps at the system level during focus sessions, and preventing the App's own uninstall while Warden Mode is active. It is never used for monitoring, data access, or remote control, no additional data is collected or transmitted, and you can remove the role at any time in Settings → Warden Mode (outside an active focus session).</li>
         </ul>
 
-        <h2>4. Data Retention</h2>
+        <h2>5. Data Retention</h2>
         <p>All local settings and configurations are stored on your device and are immediately deleted when you uninstall the App. Because App data is excluded from Android's cloud backup and device-transfer systems, no copy persists after uninstall. Anonymous crash and analytics data sent to Firebase is retained and processed by Google in accordance with their data retention policies. Because no personal identifiers are attached to this data, it cannot be linked back to you.</p>
 
-        <h2>5. Advertising</h2>
+        <h2>6. Advertising</h2>
         <p>Focus Pocus is free and does not display third-party advertisements. The advertising identifier (AD_ID) is explicitly removed and no ad-targeting data is collected.</p>
 
-        <h2>6. Children's Privacy</h2>
+        <h2>7. Children's Privacy</h2>
         <p>The App does not address anyone under the age of 13. As the App does not collect personal information, I do not knowingly collect personally identifiable information from children.</p>
 
-        <h2>7. Changes to This Privacy Policy</h2>
+        <h2>8. Changes to This Privacy Policy</h2>
         <p>I may update this Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Privacy Policy on this page.</p>
 
-        <h2>8. Contact Me</h2>
+        <h2>9. Contact Me</h2>
         <p>If you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me.</p>
 
         <div class="contact-box">
