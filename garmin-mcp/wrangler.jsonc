@@ -6,8 +6,14 @@
   // global_fetch_strictly_public is required by the OAuth provider to fetch
   // Client ID Metadata Documents safely.
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  // Public URL: https://infinicadaweb-garmin-mcp.<subdomain>.workers.dev. Preview URLs per
-  // version are off, so the only OAuth issuer is the production origin.
+  // Serve this Worker on a custom domain in a zone on your Cloudflare account,
+  // because the Access application that protects /authorize is set up on that
+  // hostname. Uncomment and set your hostname, e.g. "garmin.example.com":
+  // "routes": [{ "pattern": "garmin.example.com", "custom_domain": true }],
+  // The server takes its OAuth issuer from the request origin, so nothing else
+  // changes. Once the custom domain works, set workers_dev to false so it is the
+  // only origin; on workers.dev, /authorize already fails closed (no Access).
+  // Preview URLs per version are off for the same reason.
   "workers_dev": true,
   "preview_urls": false,
   "observability": { "enabled": true },
