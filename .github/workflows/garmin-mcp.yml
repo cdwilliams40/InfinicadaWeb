@@ -1,0 +1,32 @@
+name: garmin-mcp
+
+on:
+  push:
+    branches: [main]
+    paths: ["garmin-mcp/**", ".github/workflows/garmin-mcp.yml"]
+  pull_request:
+    paths: ["garmin-mcp/**", ".github/workflows/garmin-mcp.yml"]
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: garmin-mcp
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: garmin-mcp/package.json
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: garmin-mcp/.node-version
+          cache: pnpm
+          cache-dependency-path: garmin-mcp/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test

@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "infinicadaweb-garmin-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-20",
+  // global_fetch_strictly_public is required by the OAuth provider to fetch
+  // Client ID Metadata Documents safely.
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Public URL: https://infinicadaweb-garmin-mcp.<subdomain>.workers.dev. Preview URLs per
+  // version are off, so the only OAuth issuer is the production origin.
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  // OAuth clients, grants and tokens, plus the cached Garmin bearer token.
+  // Without an id, the first `wrangler deploy` provisions the namespace
+  // ("infinicadaweb-garmin-mcp-oauth-kv") and later deploys keep using it.
+  "kv_namespaces": [{ "binding": "OAUTH_KV" }],
+  "vars": {
+    // "global" (connect.garmin.com) or "cn" (connect.garmin.cn)
+    "GARMIN_REGION": "global",
+    // IANA time zone used to resolve "today" when a date is omitted
+    "TIMEZONE": "America/New_York"
+  },
+  // ACCESS_AUD: audience tag of the Cloudflare Access application that
+  // protects /authorize.
+  "secrets": {
+    "required": ["GARMIN_API_KEY", "ACCESS_AUD"]
+  },
+  // `wrangler dev` simulates Access with this identity; set ACCESS_AUD to the
+  // same aud in .env.
+  "access": {
+    "dev": { "aud": "local-dev", "identity": { "email": "owner@example.com" } }
+  }
+}
